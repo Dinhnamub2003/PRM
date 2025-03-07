@@ -73,8 +73,7 @@ public abstract class ClothingDatabase extends RoomDatabase {
                     productDao.insert(p1);
                     productDao.insert(p2);
                     productDao.insert(p3);
-                    System.out.println("Inserted Product: " + p1.getName());
-//                    Log.d("Database", "Inserted Product: " + p1.getName());
+
                 }
             });
         }

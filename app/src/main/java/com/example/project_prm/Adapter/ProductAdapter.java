@@ -31,6 +31,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public void onBindViewHolder(@NonNull ProductViewHolder holder, int position) {
         Product product = productList.get(position);
         holder.name.setText(product.getName());
+        holder.brand.setText(product.getBrand());
         holder.price.setText(String.format("%,.0f VND", product.getSale_price())); // Format tiền tệ
     }
 
@@ -48,12 +49,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView name, price;
+        TextView name, price, brand;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvProductName);
             price = itemView.findViewById(R.id.tvProductPrice);
+            brand = itemView.findViewById(R.id.tvBrandName);
         }
     }
 }

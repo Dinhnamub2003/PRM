@@ -53,8 +53,8 @@ public class ProductActivity extends AppCompatActivity {
 
         productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
         productViewModel.getAllProducts().observe(this, productAdapter::setProductList);
-        findViewById(R.id.btnAddProduct).setOnClickListener(v -> {
-            Intent intent = new Intent(this, AddProductActivity.class);
+        findViewById(R.id.btnAdd).setOnClickListener(v -> {
+            Intent intent = new Intent(ProductActivity.this, AddProductActivity.class);
             startActivity(intent);
         });
     }

@@ -6,9 +6,16 @@
 
     <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
+        android:layout_height="match_parent"
         android:orientation="vertical"
+        android:scrollbars="vertical"
         android:padding="16dp">
+
+        <ImageView
+            android:id="@+id/imageViewProduct"
+            android:layout_width="120dp"
+            android:layout_height="120dp"
+            android:src="@drawable/img_avatar" />
 
         <TextView
             android:id="@+id/tvProductName"
@@ -16,15 +23,30 @@
             android:layout_height="wrap_content"
             android:text="Tên sản phẩm"
             android:textSize="18sp"
-            android:textStyle="bold"/>
+            android:textStyle="bold" />
+
+        <TextView
+            android:id="@+id/tvBrandName"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Nhãn hàng"
+            android:textColor="@color/design_default_color_primary_variant"
+            android:textSize="18sp"
+            android:textStyle="bold" />
 
         <TextView
             android:id="@+id/tvProductPrice"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Giá sản phẩm"
-            android:textSize="16sp"
-            android:textColor="@android:color/holo_red_dark"/>
+            android:textColor="@android:color/holo_red_dark"
+            android:textSize="16sp" />
+
+        <RadioButton
+            android:id="@+id/btnSelect"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="320dp" />
     </LinearLayout>
 
 </androidx.cardview.widget.CardView>

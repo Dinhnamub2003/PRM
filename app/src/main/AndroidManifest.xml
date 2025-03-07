@@ -13,9 +13,14 @@
         android:theme="@style/Theme.Project_PRM"
         tools:targetApi="35">
         <activity
+            android:name=".Activity.DetailProductActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.EditProductActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.AddProductActivity"
             android:exported="true" />
-
         <activity
             android:name=".Activity.ProductActivity"
             android:exported="true" />
@@ -24,10 +29,10 @@
             android:exported="true">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
+
                 <category android:name="android.intent.category.LAUNCHER" />
             </intent-filter>
         </activity>
-
     </application>
 
 </manifest>
