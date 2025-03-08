@@ -10,13 +10,15 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.project_prm.Dao.*;
 import com.example.project_prm.Entities.*;
+
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 @Database(entities = {
         User.class, Role.class, Category.class, Product.class,
         Order.class, OrderDetail.class, Cart.class, Rating.class
-}, version = 1, exportSchema = false)
+}, version = 2, exportSchema = false)
 public abstract class ClothingDatabase extends RoomDatabase {
 
     private static volatile ClothingDatabase INSTANCE;
@@ -59,25 +61,26 @@ public abstract class ClothingDatabase extends RoomDatabase {
 
                     // Thêm dữ liệu mẫu
                     Product p1 = new Product("Laptop", 1, "Dell", "LAP123", 10, "pcs",
-                            1500, 10, 1400.0, "Dell Inc.", "", "2025-03-04", "2025-03-04",
-                            null, 0);
+                            1500, 10, 1400.0, "Dell Inc.", "image.jpg", "2025-03-04", "2025-03-04", 0);
 
                     Product p2 = new Product("Smartphone", 2, "Samsung", "S23", 20, "pcs",
-                            999, 5, 950.0, "Samsung Electronics", "", "2025-03-04", "2025-03-04",
-                            null, 0);
+                            999, 5, 950.0, "Samsung Electronics", "image.jpg", "2025-03-04", "2025-03-04", 0);
 
                     Product p3 = new Product("Headphones", 3, "Sony", "HP789", 15, "pcs",
-                            299, 15, 250.0, "Sony Corp.", "", "2025-03-04", "2025-03-04",
-                            null, 0);
+                            299, 15, 250.0, "Sony Corp.", "image.jpg", "2025-03-04", "2025-03-04", 0);
 
                     productDao.insert(p1);
                     productDao.insert(p2);
                     productDao.insert(p3);
-                    System.out.println("Inserted Product: " + p1.getName());
-//                    Log.d("Database", "Inserted Product: " + p1.getName());
+
+
+
+
                 }
             });
         }
     };
+
+
 
 }
