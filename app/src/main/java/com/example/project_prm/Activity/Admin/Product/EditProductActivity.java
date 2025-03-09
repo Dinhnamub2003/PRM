@@ -1,4 +1,4 @@
-package com.example.project_prm.Activity;
+package com.example.project_prm.Activity.Admin.Product;
 
 import android.os.Bundle;
 

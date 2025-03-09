@@ -10,6 +10,9 @@ import androidx.room.RoomDatabase;
 import androidx.sqlite.db.SupportSQLiteDatabase;
 import com.example.project_prm.Dao.*;
 import com.example.project_prm.Entities.*;
+
+import java.util.Arrays;
+import java.util.List;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
@@ -38,9 +41,10 @@ public abstract class ClothingDatabase extends RoomDatabase {
             synchronized (ClothingDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    ClothingDatabase.class, "clothing_database")
+                                    ClothingDatabase.class, "DBClothing")
                             .fallbackToDestructiveMigration()
-                            .addCallback(roomDatabaseCallback) // Thêm callback để insert dữ liệu mẫu
+
+                           // .addCallback(roomDatabaseCallback) // Thêm callback để insert dữ liệu mẫu
                             .build();
                 }
             }
@@ -48,35 +52,23 @@ public abstract class ClothingDatabase extends RoomDatabase {
         return INSTANCE;
     }
 
-    private static final RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
-        @Override
-        public void onCreate(@NonNull SupportSQLiteDatabase db) {
-            super.onCreate(db);
-            databaseWriteExecutor.execute(() -> {
-                ClothingDatabase database = INSTANCE;
-                if (database != null) {
-                    ProductDao productDao = database.productDao();
+//    private static final RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
+//        @Override
+//        public void onCreate(@NonNull SupportSQLiteDatabase db) {
+//            super.onCreate(db);
+//            databaseWriteExecutor.execute(() -> {
+//                ClothingDatabase database = INSTANCE;
+//                if (database != null) {
+//                    ProductDao productDao = database.productDao();
+//                    CategoryDao categoryDao = database.categoryDao();
+//                    Category c1 = new Category("Áo");
+//                    categoryDao.insert(c1);
+//                }
+//            });
+//        }
+//    };
 
-                    // Thêm dữ liệu mẫu
-                    Product p1 = new Product("Laptop", 1, "Dell", "LAP123", 10, "pcs",
-                            1500, 10, 1400.0, "Dell Inc.", "", "2025-03-04", "2025-03-04",
-                            null, 0);
 
-                    Product p2 = new Product("Smartphone", 2, "Samsung", "S23", 20, "pcs",
-                            999, 5, 950.0, "Samsung Electronics", "", "2025-03-04", "2025-03-04",
-                            null, 0);
 
-                    Product p3 = new Product("Headphones", 3, "Sony", "HP789", 15, "pcs",
-                            299, 15, 250.0, "Sony Corp.", "", "2025-03-04", "2025-03-04",
-                            null, 0);
-
-                    productDao.insert(p1);
-                    productDao.insert(p2);
-                    productDao.insert(p3);
-
-                }
-            });
-        }
-    };
 
 }

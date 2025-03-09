@@ -40,18 +40,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         return productList.size();
     }
 
-    public void setProductList(List<Product> newProductList) {
-        if (newProductList != null) {
-            this.productList.clear();
-            this.productList.addAll(newProductList);
-            notifyDataSetChanged();
-        }
+    public void setProductList(List<Product> products) {
+        this.productList = products;
+        notifyDataSetChanged();
     }
+
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView name, price, brand;
 
-        public ProductViewHolder(@NonNull View itemView) {
+                public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
             name = itemView.findViewById(R.id.tvProductName);
             price = itemView.findViewById(R.id.tvProductPrice);

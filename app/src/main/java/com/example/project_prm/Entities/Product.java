@@ -11,23 +11,22 @@ public class Product {
     @PrimaryKey(autoGenerate = true)
     private int id;
     private String name;
-    private Integer category_id;
+    private int category_id;
     private String brand;
     private String product_code;
     private int stock;
     private String unit;
     private double sale_price;
     private double discount;
-    private Double dealer_price;
+    private double dealer_price;
     private String manufacturer;
     private String image;
     private String created_at;
     private String updated_at;
-    private String deleted_at;
+
     private int isDelete;
 
-    public Product(String name, double price) {
-    }
+
 
     public int getId() {
         return id;
@@ -45,11 +44,11 @@ public class Product {
         this.name = name;
     }
 
-    public Integer getCategory_id() {
+    public int getCategory_id() {
         return category_id;
     }
 
-    public void setCategory_id(Integer category_id) {
+    public void setCategory_id(int category_id) {
         this.category_id = category_id;
     }
 
@@ -101,11 +100,11 @@ public class Product {
         this.discount = discount;
     }
 
-    public Double getDealer_price() {
+    public double getDealer_price() {
         return dealer_price;
     }
 
-    public void setDealer_price(Double dealer_price) {
+    public void setDealer_price(double dealer_price) {
         this.dealer_price = dealer_price;
     }
 
@@ -141,13 +140,7 @@ public class Product {
         this.updated_at = updated_at;
     }
 
-    public String getDeleted_at() {
-        return deleted_at;
-    }
 
-    public void setDeleted_at(String deleted_at) {
-        this.deleted_at = deleted_at;
-    }
 
     public int getIsDelete() {
         return isDelete;
@@ -160,9 +153,8 @@ public class Product {
     public  Product(){}
 
     public Product(String name, int category_id, String brand, String product_code, int stock,
-                   String unit, double sale_price, double discount, Double dealer_price,
-                   String manufacturer, String image, String created_at, String updated_at,
-                   String deleted_at, int isDelete) {
+                   String unit, double sale_price, double discount, double dealer_price,
+                   String manufacturer, String image, String created_at, String updated_at, int isDelete) {
         this.name = name;
         this.category_id = category_id;
         this.brand = brand;
@@ -176,8 +168,14 @@ public class Product {
         this.image = image;
         this.created_at = created_at;
         this.updated_at = updated_at;
-        this.deleted_at = deleted_at;
         this.isDelete = isDelete;
     }
+    public Product(String name, double sale_price, String brand) {
+        this.name = name;
+        this.sale_price = sale_price;
+        this.brand = brand;
+    }
+//    public Product(String name, int i, String brand, String productCode, int stock, String unit, double salePrice, double discount, double dealerPrice, String manufacturer, String s, String currentTime, Object o, Object o1, int i1) {
+//    }
 
 }

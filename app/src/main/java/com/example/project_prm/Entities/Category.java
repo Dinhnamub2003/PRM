@@ -23,6 +23,9 @@ public class Category {
         this.name = name;
     }
 
+    public Category(String áo) {
+    }
+
     public int getId() {
         return id;
     }
