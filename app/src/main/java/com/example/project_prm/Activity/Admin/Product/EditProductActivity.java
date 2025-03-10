@@ -89,21 +89,25 @@ public class EditProductActivity extends AppCompatActivity {
 
     }
     private void loadCategorySpinner(int selectedCategoryId) {
-        // Lấy danh sách danh mục từ database
-        List<Category> categoryList = (List<Category>) categoryRepository.getAllCategories();
-        List<String> categoryNames = new ArrayList<>();
+        if (categoryRepository == null) {
+            return; // Nếu repository chưa được khởi tạo thì thoát luôn
+        }
 
-        // Duyệt danh sách và lấy tên danh mục
+        List<Category> categoryList = (List<Category>) categoryRepository.getAllCategories();
+        if (categoryList == null || categoryList.isEmpty()) {
+            return; // Nếu không có danh mục nào thì thoát
+        }
+
+        List<String> categoryNames = new ArrayList<>();
         for (Category category : categoryList) {
             categoryNames.add(category.getName());
         }
 
-        // Tạo Adapter cho Spinner
         ArrayAdapter<String> adapter = new ArrayAdapter<>(this, android.R.layout.simple_spinner_item, categoryNames);
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item);
         spinnerCategoryEdit.setAdapter(adapter);
 
-        // Tìm vị trí của danh mục được chọn
+        // Tìm vị trí danh mục hiện tại
         int selectedPosition = -1;
         for (int i = 0; i < categoryList.size(); i++) {
             if (categoryList.get(i).getId() == selectedCategoryId) {
@@ -112,11 +116,11 @@ public class EditProductActivity extends AppCompatActivity {
             }
         }
 
-        // Nếu tìm thấy, đặt Spinner vào đúng vị trí
         if (selectedPosition != -1) {
             spinnerCategoryEdit.setSelection(selectedPosition);
         }
     }
+
 
 
 }
