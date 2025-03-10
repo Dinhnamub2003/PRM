@@ -57,7 +57,7 @@ public class ProductActivity extends AppCompatActivity {
         });
 
 
-
+//Sap xep theo giá
         ImageView ivFilter = findViewById(R.id.ivFilter);
         ivFilter.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(ProductActivity.this, ivFilter);
