@@ -20,7 +20,7 @@ public class ProductRepository {
     public ProductRepository(Application application) {
         ClothingDatabase db = ClothingDatabase.getInstance(application);
         productDao = db.productDao();
-        allProducts = productDao.getAllProducts();
+        allProducts = productDao.getAllProductsAdmin();
         executorService = Executors.newSingleThreadExecutor();
     }
 
@@ -31,7 +31,9 @@ public class ProductRepository {
     public void insert(Product product) {
         new InsertProductAsyncTask(productDao).execute(product);
     }
-
+    public Product getProductById(int productId) {
+        return productDao.getProductById(productId);
+    }
     private static class InsertProductAsyncTask extends AsyncTask<Product, Void, Void> {
         private ProductDao productDao;
 

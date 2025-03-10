@@ -1,4 +1,4 @@
-package com.example.project_prm.ViewModel;
+package com.example.project_prm.ViewModel.Admin;
 
 import android.app.Application;
 

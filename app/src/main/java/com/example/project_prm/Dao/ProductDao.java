@@ -19,9 +19,8 @@ public interface ProductDao {
     @Query("SELECT * FROM product WHERE id = :productId")
     Product getProductById(int productId);
 
-//    @Query("SELECT * FROM product WHERE category_id = :categoryId")
-//    List<Product> getProductsByCategory(int categoryId);
+    @Query("SELECT * FROM product  Order By created_at desc")
+    LiveData<List<Product>> getAllProductsAdmin();
 
-    @Query("SELECT * FROM product")
-    LiveData<List<Product>> getAllProducts();
+
 }
