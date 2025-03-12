@@ -4,10 +4,13 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
+import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
+import android.widget.Toast;
 
+import androidx.appcompat.app.AlertDialog;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
@@ -25,6 +28,8 @@ public class ProductActivity extends AppCompatActivity {
     private ProductAdapter productAdapter;
     private ProductViewModel productViewModel;
     private ImageView ivFilter;
+
+
 
 
 
@@ -55,6 +60,33 @@ public class ProductActivity extends AppCompatActivity {
             Intent intent = new Intent(ProductActivity.this, AddProductActivity.class);
             startActivity(intent);
         });
+        findViewById(R.id.btnDelete).setOnClickListener(v -> {
+            int selectedPosition = productAdapter.getSelectedPosition();
+            if (selectedPosition != -1) {
+                Product selectedProduct = productAdapter.getProductAt(selectedPosition);
+
+                AlertDialog.Builder builder = new AlertDialog.Builder(this);
+                builder.setTitle("Warning!")
+                        .setMessage("Continue your action?")
+                        .setPositiveButton("Yes", (dialog, which) -> {
+                            if (selectedProduct.getIsDelete() == 1) {
+                                productViewModel.restoreProduct(selectedProduct.getId());
+
+                            } else {
+                                productViewModel.softDelete(selectedProduct.getId());
+                            }
+                            productAdapter.clearSelection();
+                        })
+                        .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
+                        .show();
+            }else{
+                Toast.makeText(this, "Choose one product", Toast.LENGTH_SHORT).show();
+            }
+
+        });
+
+
+
 
 
 //Sap xep theo giá

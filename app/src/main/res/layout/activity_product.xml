@@ -12,7 +12,7 @@
         android:id="@+id/tvTitle"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Product List"
+        android:text="Manage Product"
         android:textSize="24sp"
         android:textStyle="bold"
         android:padding="16dp"
@@ -84,23 +84,41 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <Button
+        <ImageButton
             android:id="@+id/btnAdd"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="+" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_add"
+            android:background="@drawable/bg_circle"
+            android:contentDescription="Add Product"
+            android:padding="20dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="centerInside"/>
 
-        <Button
+
+
+
+        <ImageButton
             android:id="@+id/btnEdit"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="✎" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_edit"
+            android:background="@drawable/bg_circle"
+            android:contentDescription="Edit Product"
+            android:padding="20dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="centerInside"/>
 
-        <Button
+        <ImageButton
             android:id="@+id/btnDelete"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:text="🗑" />
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:src="@drawable/ic_delete"
+            android:background="@drawable/bg_circle"
+            android:contentDescription="Delete Product"
+            android:padding="20dp"
+            android:layout_marginStart="10dp"
+            android:scaleType="centerInside"/>
     </LinearLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

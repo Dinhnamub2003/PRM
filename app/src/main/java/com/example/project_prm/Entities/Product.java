@@ -28,6 +28,7 @@ public class Product {
 
 
 
+
     public int getId() {
         return id;
     }
@@ -155,6 +156,25 @@ public class Product {
     public Product(String name, int category_id, String brand, String product_code, int stock,
                    String unit, double sale_price, double discount, double dealer_price,
                    String manufacturer, String image, String created_at, String updated_at, int isDelete) {
+        this.name = name;
+        this.category_id = category_id;
+        this.brand = brand;
+        this.product_code = product_code;
+        this.stock = stock;
+        this.unit = unit;
+        this.sale_price = sale_price;
+        this.discount = discount;
+        this.dealer_price = dealer_price;
+        this.manufacturer = manufacturer;
+        this.image = image;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.isDelete = isDelete;
+    }
+    public Product(int id, String name, int category_id, String brand, String product_code, int stock,
+                   String unit, double sale_price, double discount, double dealer_price,
+                   String manufacturer, String image, String created_at, String updated_at, int isDelete) {
+        this.id = id;
         this.name = name;
         this.category_id = category_id;
         this.brand = brand;

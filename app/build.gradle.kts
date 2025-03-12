@@ -52,4 +52,7 @@ dependencies {
     testImplementation(libs.junit)
     androidTestImplementation(libs.ext.junit)
     androidTestImplementation(libs.espresso.core)
+
+    // Live
+    implementation("com.github.ZEGOCLOUD:zego_uikit_prebuilt_live_streaming_android:+")
 }

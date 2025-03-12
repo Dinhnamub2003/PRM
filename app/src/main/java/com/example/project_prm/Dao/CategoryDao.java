@@ -1,5 +1,6 @@
 package com.example.project_prm.Dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.*;
 import com.example.project_prm.Entities.Category;
 import java.util.List;
@@ -19,5 +20,5 @@ public interface CategoryDao {
     Category getCategoryById(int categoryId);
 
     @Query("SELECT * FROM category")
-    List<Category> getAllCategories();
+    LiveData<List<Category>> getAllCategories();
 }

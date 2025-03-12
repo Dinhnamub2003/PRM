@@ -5,10 +5,12 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.AdapterView;
+import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -29,6 +31,8 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private String currentQuery = "";
     private boolean isPriceAscending = true;
 
+
+
     private int selectedPosition = -1;
 
 
@@ -40,7 +44,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
         }
     }
-
 
 
     @NonNull
@@ -56,6 +59,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.name.setText(product.getName());
         holder.brand.setText(product.getBrand());
         holder.price.setText(String.format("%,.0f VND", product.getSale_price()));
+        if (product.getIsDelete() == 1) {
+            holder.status.setText("Deleted");
+            holder.status.setTextColor(Color.RED);
+        } else {
+            holder.status.setText("Active");
+            holder.status.setTextColor(Color.GREEN);
+        }
 
         // Hiển thị ảnh sản phẩm từ đường dẫn
         if (product.getImage() != null && !product.getImage().isEmpty()) {
@@ -105,6 +115,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         applyFilters();
     }
 
+
     private void applyFilters() {
         List<Product> filteredList = new ArrayList<>();
 
@@ -122,12 +133,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             filteredList.sort((p1, p2) -> Double.compare(p2.getSale_price(), p1.getSale_price()));
         }
 
+
         productList = filteredList;
         notifyDataSetChanged();
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView name, price, brand;
+        TextView name, price, brand, status;
         ImageView imageViewProduct;
         RadioButton btnSelect;
 
@@ -137,9 +149,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             name = itemView.findViewById(R.id.tvProductName);
             brand = itemView.findViewById(R.id.tvBrandName);
             price = itemView.findViewById(R.id.tvProductPrice);
+            status = itemView.findViewById(R.id.tvStatus);
             btnSelect = itemView.findViewById(R.id.btnSelect);
         }
     }
+
     public int getSelectedPosition() {
         return selectedPosition;
     }
@@ -147,6 +161,11 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public Product getProductAt(int position) {
         return productList.get(position);
     }
+    public void clearSelection() {
+        selectedPosition = -1; // Đặt lại vị trí đã chọn
+        notifyDataSetChanged(); // Cập nhật lại danh sách
+    }
+
 
 }
 

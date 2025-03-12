@@ -2,8 +2,11 @@ package com.example.project_prm.Repository;
 
 import android.app.Application;
 import android.os.AsyncTask;
+import android.util.Log;
 
 import androidx.lifecycle.LiveData;
+import androidx.room.Update;
+
 import com.example.project_prm.Dao.ProductDao;
 import com.example.project_prm.Database.ClothingDatabase;
 import com.example.project_prm.Database.ClothingDatabase;
@@ -31,6 +34,18 @@ public class ProductRepository {
     public void insert(Product product) {
         new InsertProductAsyncTask(productDao).execute(product);
     }
+    public void update(Product product) {
+
+        executorService.execute(() -> productDao.update(product));
+    }
+    public void softDelete(int productId) {
+        executorService.execute(() -> productDao.softDelete(productId));
+    }
+    public void restoreProduct(int productId) {
+        executorService.execute(() -> productDao.restoreProduct(productId));
+    }
+
+
     public Product getProductById(int productId) {
         return productDao.getProductById(productId);
     }

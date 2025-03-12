@@ -16,6 +16,12 @@ public interface ProductDao {
     @Delete
     void delete(Product product);
 
+    @Query("UPDATE product SET isDelete = 1 WHERE id = :productId")
+    void softDelete(int productId);
+    @Query("UPDATE product SET isDelete = 0 WHERE id = :productId")
+    void restoreProduct(int productId);
+
+
     @Query("SELECT * FROM product WHERE id = :productId")
     Product getProductById(int productId);
 

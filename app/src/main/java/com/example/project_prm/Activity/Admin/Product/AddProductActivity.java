@@ -127,7 +127,7 @@ public class AddProductActivity extends AppCompatActivity {
         String unit = etUnit.getText().toString().trim();
 
         if (unit.isEmpty() || name.isEmpty() || brand.isEmpty() || productCode.isEmpty() || stockStr.isEmpty() || salePriceStr.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Please enter require field!", Toast.LENGTH_SHORT).show();
             return;
         }
 
@@ -138,8 +138,8 @@ public class AddProductActivity extends AppCompatActivity {
 
         int stock = Integer.parseInt(stockStr);
         double salePrice = Double.parseDouble(salePriceStr);
-        double discount = discountStr.isEmpty() ? 0.0 : Double.parseDouble(discountStr);
-        double dealerPrice = dealerPriceStr.isEmpty() ? 0.0 : Double.parseDouble(dealerPriceStr);
+        double discount = discountStr.isEmpty() ? 0 : Double.parseDouble(discountStr);
+        double dealerPrice = dealerPriceStr.isEmpty() ? 0 : Double.parseDouble(dealerPriceStr);
 
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
@@ -149,7 +149,7 @@ public class AddProductActivity extends AppCompatActivity {
         );
         productViewModel.insert(newProduct);
 
-        Toast.makeText(this, "Sản phẩm đã được thêm thành công", Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Add successfully!", Toast.LENGTH_SHORT).show();
         finish();
     }
 }
