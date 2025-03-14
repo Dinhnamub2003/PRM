@@ -9,15 +9,13 @@ import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
-import android.widget.Button;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_prm.Activity.Admin.Product.EditProductActivity;
+import com.example.project_prm.Activity.Admin.Product.DetailProductActivity;
 import com.example.project_prm.Entities.Product;
 import com.example.project_prm.R;
 import java.io.File;
@@ -25,7 +23,7 @@ import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdapter.ProductViewHolder> {
     private List<Product> productList = new ArrayList<>();
     private List<Product> originalList = new ArrayList<>();
     private String currentQuery = "";
@@ -36,7 +34,7 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     private int selectedPosition = -1;
 
 
-    public ProductAdapter(List<Product> productList) {
+    public ManageProductAdapter(List<Product> productList) {
 
         if (productList != null) {
             this.productList = new ArrayList<>(productList);
@@ -91,6 +89,12 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             notifyDataSetChanged();
         });
 
+        holder.imageViewProduct.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, DetailProductActivity.class);
+            intent.putExtra("PRODUCT_ID", product.getId());
+            context.startActivity(intent);
+        });
 
     }
 

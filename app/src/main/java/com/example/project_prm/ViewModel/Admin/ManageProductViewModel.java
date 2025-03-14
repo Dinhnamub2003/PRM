@@ -11,11 +11,11 @@ import com.example.project_prm.Repository.ProductRepository;
 import java.util.List;
 import java.util.concurrent.Executors;
 
-public class ProductViewModel extends AndroidViewModel {
+public class ManageProductViewModel extends AndroidViewModel {
     private ProductRepository repository;
     private LiveData<List<Product>> allProducts;
 
-    public ProductViewModel(@NonNull Application application) {
+    public ManageProductViewModel(@NonNull Application application) {
         super(application);
         repository = new ProductRepository(application);
         allProducts = repository.getAllProducts();

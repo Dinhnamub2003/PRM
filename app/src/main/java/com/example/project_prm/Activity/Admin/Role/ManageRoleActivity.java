@@ -1,4 +1,4 @@
-package com.example.project_prm.Activity.Admin.Category;
+package com.example.project_prm.Activity.Admin.Role;
 
 import android.os.Bundle;
 
@@ -10,13 +10,13 @@ import androidx.core.view.WindowInsetsCompat;
 
 import com.example.project_prm.R;
 
-public class CategoryActivity extends AppCompatActivity {
+public class ManageRoleActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_category);
+        setContentView(R.layout.activity_manage_role);
         ViewCompat.setOnApplyWindowInsetsListener(findViewById(R.id.main), (v, insets) -> {
             Insets systemBars = insets.getInsets(WindowInsetsCompat.Type.systemBars());
             v.setPadding(systemBars.left, systemBars.top, systemBars.right, systemBars.bottom);

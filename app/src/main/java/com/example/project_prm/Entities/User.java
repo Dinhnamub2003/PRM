@@ -43,6 +43,19 @@ public class User {
         this.deleted_at = deleted_at;
         this.isDelete = isDelete;
     }
+    public User(String username, String password, String phone, String gmail, String address, String image, Integer role_id, String created_at, String updated_at, String deleted_at, int isDelete) {
+        this.username = username;
+        this.password = password;
+        this.phone = phone;
+        this.gmail = gmail;
+        this.address = address;
+        this.image = image;
+        this.role_id = role_id;
+        this.created_at = created_at;
+        this.updated_at = updated_at;
+        this.deleted_at = deleted_at;
+        this.isDelete = isDelete;
+    }
 
     public int getId() {
         return id;

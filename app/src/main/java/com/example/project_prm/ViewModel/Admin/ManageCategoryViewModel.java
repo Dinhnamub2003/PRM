@@ -11,11 +11,11 @@ import com.example.project_prm.Repository.CategoryRepository;
 
 import java.util.List;
 
-public class CategoryViewModel extends AndroidViewModel {
+public class ManageCategoryViewModel extends AndroidViewModel {
     private final CategoryRepository repository;
     private final LiveData<List<Category>> allCategories;
 
-    public CategoryViewModel(@NonNull Application application) {
+    public ManageCategoryViewModel(@NonNull Application application) {
         super(application);
         repository = new CategoryRepository(application);
         allCategories = repository.getAllCategories(); // Không ép kiểu

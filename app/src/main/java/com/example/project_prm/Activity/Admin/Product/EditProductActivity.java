@@ -1,14 +1,12 @@
 package com.example.project_prm.Activity.Admin.Product;
 
 import android.content.Intent;
-import android.database.Cursor;
 import android.graphics.Bitmap;
 import android.graphics.ImageDecoder;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
-import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -27,7 +25,7 @@ import com.example.project_prm.R;
 import com.example.project_prm.Repository.CategoryRepository;
 import com.example.project_prm.Repository.ProductRepository;
 import com.example.project_prm.Utils.ImageUtils;
-import com.example.project_prm.ViewModel.Admin.ProductViewModel;
+import com.example.project_prm.ViewModel.Admin.ManageProductViewModel;
 
 import java.io.File;
 import java.io.IOException;
@@ -40,7 +38,7 @@ import java.util.Locale;
 public class EditProductActivity extends AppCompatActivity {
     private ProductRepository productRepository;
     private CategoryRepository categoryRepository;
-    private Product existingProduct; // Thêm biến này
+    private Product existingProduct;
 
     private EditText etProductNameEdit, etBrandEdit, etProductCodeEdit, etStockEdit, etUnitEdit,
             etSalePriceEdit, etDiscountEdit, etDealerPriceEdit, etManufacturerEdit;
@@ -48,7 +46,7 @@ public class EditProductActivity extends AppCompatActivity {
     private Spinner spinnerCategoryEdit;
     private Button btnSaveProductEdit, btnUploadImageEdit, btnBack;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
-    private ProductViewModel productViewModel;
+    private ManageProductViewModel manageProductViewModel;
     private List<Category> categoryList = new ArrayList<>();
 
     private String imagePath = "";
@@ -78,7 +76,7 @@ public class EditProductActivity extends AppCompatActivity {
         btnUploadImageEdit.setOnClickListener(v -> openFileChooser());
         btnBack.setOnClickListener(v -> finish());
 
-        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
+        manageProductViewModel = new ViewModelProvider(this).get(ManageProductViewModel.class);
 
         // Khởi tạo repository
         productRepository = new ProductRepository(getApplication());
@@ -94,8 +92,8 @@ public class EditProductActivity extends AppCompatActivity {
         setupImagePicker();
     }
     private void loadProductData(int productId) {
-        ProductViewModel productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-        productViewModel.getProductById(productId).observe(this, this::updateUI);
+        ManageProductViewModel manageProductViewModel = new ViewModelProvider(this).get(ManageProductViewModel.class);
+        manageProductViewModel.getProductById(productId).observe(this, this::updateUI);
     }
     private void setupImagePicker() {
         imagePickerLauncher = registerForActivityResult(
@@ -204,7 +202,7 @@ public class EditProductActivity extends AppCompatActivity {
 
 
 
-        productViewModel.update(updatedProduct);
+        manageProductViewModel.update(updatedProduct);
 
         Toast.makeText(this, "Update successfully!", Toast.LENGTH_SHORT).show();
         finish();

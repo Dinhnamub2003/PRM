@@ -18,15 +18,25 @@
         android:theme="@style/Theme.Project_PRM"
         tools:targetApi="35">
         <activity
+            android:name=".Activity.Admin.Role.ManageRoleActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.Account.AddAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.Account.EditAccountActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.Account.ManageAccountActivity"
+            android:exported="true" />
+        <activity
             android:name=".Activity.User.LiveStream.LiveActivity"
-            android:screenOrientation="portrait"
             android:exported="false" />
         <activity
             android:name=".Activity.User.LiveStream.LiveStream"
-            android:screenOrientation="portrait"
             android:exported="true" />
         <activity
-            android:name=".Activity.Admin.Category.CategoryActivity"
+            android:name=".Activity.Admin.Category.ManageCategoryActivity"
             android:exported="false" />
         <activity
             android:name=".Activity.Admin.Product.DetailProductActivity"
@@ -38,7 +48,7 @@
             android:name=".Activity.Admin.Product.AddProductActivity"
             android:exported="false" />
         <activity
-            android:name=".Activity.Admin.Product.ProductActivity"
+            android:name=".Activity.Admin.Product.ManageProductActivity"
             android:exported="true" />
         <activity
             android:name=".MainActivity"

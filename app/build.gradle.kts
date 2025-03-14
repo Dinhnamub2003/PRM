@@ -36,6 +36,7 @@ dependencies {
     implementation(libs.material)
     implementation(libs.activity)
     implementation(libs.constraintlayout)
+    implementation ("androidx.paging:paging-runtime:3.1.1")
 
     // Room Database
     implementation(libs.room.runtime)

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
-import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageView;
 import android.widget.PopupMenu;
@@ -16,17 +15,17 @@ import androidx.lifecycle.ViewModelProvider;
 import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_prm.Adapter.Admin.ProductAdapter;
+import com.example.project_prm.Adapter.Admin.ManageProductAdapter;
 import com.example.project_prm.Entities.Product;
 import com.example.project_prm.R;
-import com.example.project_prm.ViewModel.Admin.ProductViewModel;
+import com.example.project_prm.ViewModel.Admin.ManageProductViewModel;
 
 import java.util.ArrayList;
 
-public class ProductActivity extends AppCompatActivity {
+public class ManageProductActivity extends AppCompatActivity {
     private RecyclerView recyclerView;
-    private ProductAdapter productAdapter;
-    private ProductViewModel productViewModel;
+    private ManageProductAdapter productAdapter;
+    private ManageProductViewModel manageProductViewModel;
     private ImageView ivFilter;
 
 
@@ -36,8 +35,8 @@ public class ProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_product);
-        productAdapter = new ProductAdapter(new ArrayList<>());
+        setContentView(R.layout.activity_manage_product);
+        productAdapter = new ManageProductAdapter(new ArrayList<>());
 
         recyclerView = findViewById(R.id.recyclerView);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -46,18 +45,19 @@ public class ProductActivity extends AppCompatActivity {
             int selectedPosition = productAdapter.getSelectedPosition();
             if (selectedPosition != -1) {
                 Product selectedProduct = productAdapter.getProductAt(selectedPosition);
-                Intent intent = new Intent(ProductActivity.this, EditProductActivity.class);
+                Intent intent = new Intent(ManageProductActivity.this, EditProductActivity.class);
                 intent.putExtra("PRODUCT_ID", selectedProduct.getId());
                 startActivity(intent);
             }
         });
 
+
         recyclerView.setAdapter(productAdapter);
 
-        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-        productViewModel.getAllProducts().observe(this, productAdapter::setProductList);
+        manageProductViewModel = new ViewModelProvider(this).get(ManageProductViewModel.class);
+        manageProductViewModel.getAllProducts().observe(this, productAdapter::setProductList);
         findViewById(R.id.btnAdd).setOnClickListener(v -> {
-            Intent intent = new Intent(ProductActivity.this, AddProductActivity.class);
+            Intent intent = new Intent(ManageProductActivity.this, AddProductActivity.class);
             startActivity(intent);
         });
         findViewById(R.id.btnDelete).setOnClickListener(v -> {
@@ -70,10 +70,10 @@ public class ProductActivity extends AppCompatActivity {
                         .setMessage("Continue your action?")
                         .setPositiveButton("Yes", (dialog, which) -> {
                             if (selectedProduct.getIsDelete() == 1) {
-                                productViewModel.restoreProduct(selectedProduct.getId());
+                                manageProductViewModel.restoreProduct(selectedProduct.getId());
 
                             } else {
-                                productViewModel.softDelete(selectedProduct.getId());
+                                manageProductViewModel.softDelete(selectedProduct.getId());
                             }
                             productAdapter.clearSelection();
                         })
@@ -92,7 +92,7 @@ public class ProductActivity extends AppCompatActivity {
 //Sap xep theo giá
         ImageView ivFilter = findViewById(R.id.ivFilter);
         ivFilter.setOnClickListener(v -> {
-            PopupMenu popup = new PopupMenu(ProductActivity.this, ivFilter);
+            PopupMenu popup = new PopupMenu(ManageProductActivity.this, ivFilter);
             popup.getMenuInflater().inflate(R.menu.filter_menu, popup.getMenu());
 
             popup.setOnMenuItemClickListener(item -> {

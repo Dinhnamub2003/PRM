@@ -1,5 +1,6 @@
 package com.example.project_prm.Dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.*;
 import com.example.project_prm.Entities.Role;
 import java.util.List;
@@ -19,5 +20,5 @@ public interface RoleDao {
     Role getRoleById(int roleId);
 
     @Query("SELECT * FROM role")
-    List<Role> getAllRoles();
+    LiveData<List<Role>> getAllRolesAdmin();
 }

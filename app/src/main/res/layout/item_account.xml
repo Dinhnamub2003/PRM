@@ -8,13 +8,12 @@
     app:cardCornerRadius="8dp">
 
     <androidx.constraintlayout.widget.ConstraintLayout
-        android:layout_width="400dp"
+        android:layout_width="match_parent"
         android:layout_height="130dp"
         android:padding="16dp">
 
-        <!-- Ảnh sản phẩm -->
         <ImageView
-            android:id="@+id/imageViewProduct"
+            android:id="@+id/imageViewAccount"
             android:layout_width="100dp"
             android:layout_height="100dp"
             android:scaleType="centerCrop"
@@ -23,71 +22,72 @@
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent" />
 
-        <!-- Tên sản phẩm -->
+
+
         <TextView
-            android:id="@+id/tvProductName"
+            android:id="@+id/tvUserName"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
-            android:text="Tên sản phẩm"
+            android:text="User Name"
             android:textSize="18sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/btnSelect"
-            app:layout_constraintStart_toEndOf="@id/imageViewProduct"
-            app:layout_constraintTop_toTopOf="@id/imageViewProduct" />
+            app:layout_constraintEnd_toStartOf="@id/btnSelectAccount"
+            app:layout_constraintStart_toEndOf="@id/imageViewAccount"
+            app:layout_constraintTop_toTopOf="@id/imageViewAccount" />
 
-        <!-- Nhãn hàng -->
+
         <TextView
-            android:id="@+id/tvBrandName"
+            android:id="@+id/tvPhoneNumber"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:paddingTop="4dp"
-            android:text="Nhãn hàng"
+            android:text="Phone"
             android:textColor="@color/design_default_color_primary_variant"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintEnd_toStartOf="@id/btnSelect"
-            app:layout_constraintStart_toStartOf="@id/tvProductName"
-            app:layout_constraintTop_toBottomOf="@id/tvProductName" />
+            app:layout_constraintEnd_toStartOf="@id/btnSelectAccount"
+            app:layout_constraintStart_toStartOf="@id/tvUserName"
+            app:layout_constraintTop_toBottomOf="@id/tvUserName" />
 
-        <!-- Giá sản phẩm -->
+
         <TextView
-            android:id="@+id/tvProductPrice"
+            android:id="@+id/tvAddress"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:paddingStart="16dp"
             android:paddingTop="4dp"
-            android:text="Giá sản phẩm"
+            android:text="Address"
             android:textColor="@android:color/holo_red_dark"
             android:textSize="16sp"
-            app:layout_constraintEnd_toStartOf="@id/btnSelect"
-            app:layout_constraintStart_toStartOf="@id/tvBrandName"
-            app:layout_constraintTop_toBottomOf="@id/tvBrandName" />
+            app:layout_constraintEnd_toStartOf="@id/btnSelectAccount"
+            app:layout_constraintStart_toStartOf="@id/tvPhoneNumber"
+            app:layout_constraintTop_toBottomOf="@id/tvPhoneNumber" />
         <TextView
-            android:id="@+id/tvStatus"
+            android:id="@+id/tvStatusAccount"
             android:layout_width="0dp"
             android:layout_height="wrap_content"
-            android:paddingStart="20dp"
+            android:paddingStart="15dp"
             android:paddingTop="30sp"
-            android:text="Trạng thái"
+            android:text="Status"
             android:textColor="@android:color/holo_green_dark"
             android:textSize="16sp"
             android:textStyle="bold"
-            app:layout_constraintStart_toStartOf="@id/tvProductPrice"
-            app:layout_constraintTop_toBottomOf="@id/tvBrandName" />
+            app:layout_constraintStart_toStartOf="@id/tvAddress"
+            app:layout_constraintTop_toBottomOf="@id/tvPhoneNumber" />
 
         <!-- RadioButton -->
         <RadioButton
-            android:id="@+id/btnSelect"
+            android:id="@+id/btnSelectAccount"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="false"
             android:focusableInTouchMode="false"
-            app:layout_constraintBottom_toBottomOf="@id/imageViewProduct"
+            app:layout_constraintBottom_toBottomOf="@id/imageViewAccount"
             app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/imageViewProduct" />
+            app:layout_constraintTop_toTopOf="@id/imageViewAccount" />
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </androidx.cardview.widget.CardView>

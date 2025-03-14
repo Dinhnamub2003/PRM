@@ -22,8 +22,8 @@ import com.example.project_prm.Entities.Category;
 import com.example.project_prm.Entities.Product;
 import com.example.project_prm.R;
 import com.example.project_prm.Utils.ImageUtils;
-import com.example.project_prm.ViewModel.Admin.CategoryViewModel;
-import com.example.project_prm.ViewModel.Admin.ProductViewModel;
+import com.example.project_prm.ViewModel.Admin.ManageCategoryViewModel;
+import com.example.project_prm.ViewModel.Admin.ManageProductViewModel;
 
 import java.io.IOException;
 import java.text.SimpleDateFormat;
@@ -37,8 +37,8 @@ public class AddProductActivity extends AppCompatActivity {
     private Spinner spinnerCategory;
     private Button btnSaveProduct, btnUploadImage;
     private ImageView imgProduct;
-    private ProductViewModel productViewModel;
-    private CategoryViewModel categoryViewModel;
+    private ManageProductViewModel manageProductViewModel;
+    private ManageCategoryViewModel manageCategoryViewModel;
     private List<Category> categoryList = new ArrayList<>();
     private ArrayAdapter<String> categoryAdapter;
     private int selectedCategoryId = -1;
@@ -65,8 +65,8 @@ public class AddProductActivity extends AppCompatActivity {
         imgProduct = findViewById(R.id.imgProduct);
         btnUploadImage = findViewById(R.id.btnUploadImage);
 
-        productViewModel = new ViewModelProvider(this).get(ProductViewModel.class);
-        categoryViewModel = new ViewModelProvider(this).get(CategoryViewModel.class);
+        manageProductViewModel = new ViewModelProvider(this).get(ManageProductViewModel.class);
+        manageCategoryViewModel = new ViewModelProvider(this).get(ManageCategoryViewModel.class);
 
         loadCategories();
         btnSaveProduct.setOnClickListener(v -> saveProduct());
@@ -103,7 +103,7 @@ public class AddProductActivity extends AppCompatActivity {
     }
 
     private void loadCategories() {
-        categoryViewModel.getAllCategories().observe(this, categories -> {
+        manageCategoryViewModel.getAllCategories().observe(this, categories -> {
             categoryList = categories;
             List<String> categoryNames = new ArrayList<>();
             for (Category category : categories) {
@@ -147,7 +147,7 @@ public class AddProductActivity extends AppCompatActivity {
                 name, selectedCategoryId, brand, productCode, stock, unit, salePrice,
                 discount, dealerPrice, manufacturer, imagePath, currentTime, "", 0
         );
-        productViewModel.insert(newProduct);
+        manageProductViewModel.insert(newProduct);
 
         Toast.makeText(this, "Add successfully!", Toast.LENGTH_SHORT).show();
         finish();

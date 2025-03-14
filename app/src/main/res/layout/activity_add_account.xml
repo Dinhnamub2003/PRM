@@ -4,7 +4,7 @@
     android:layout_width="match_parent"
     android:layout_height="match_parent"
     android:padding="16dp"
-    tools:context=".Activity.Admin.Product.AddProductActivity">
+    tools:context=".Activity.Admin.Account.AddAccountActivity">
 
     <!-- ScrollView chứa nội dung -->
     <ScrollView
@@ -33,16 +33,22 @@
                 android:paddingBottom="12dp"/>
 
             <EditText
-                android:id="@+id/etProductName"
+                android:id="@+id/etUserName"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Product name*"
+                android:hint="Username*"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/etPassword"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Password*"
                 android:padding="10dp"/>
 
             <TextView
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Category"
+                android:text="Role"
                 android:textSize="16sp"
                 android:textStyle="bold"
                 android:paddingTop="8dp"
@@ -50,108 +56,36 @@
                 android:paddingBottom="4dp"/>
 
             <Spinner
-                android:id="@+id/spinnerCategory"
+                android:id="@+id/spinnerRole"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:paddingStart="5dp"
+                android:paddingStart="2dp"
                 android:padding="5dp"/>
 
             <EditText
-                android:id="@+id/etBrand"
+                android:id="@+id/etPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Brand"
+                android:hint="Phone number*"
                 android:padding="10dp"/>
 
             <EditText
-                android:id="@+id/etProductCode"
+                android:id="@+id/etGmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Product Code*"
+                android:hint="Mail*"
+                android:padding="10dp"/>
+            <EditText
+                android:id="@+id/etAddress"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:hint="Address*"
                 android:padding="10dp"/>
 
-            <!-- Stock và Unit -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <EditText
-                    android:id="@+id/etStock"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Stock*"
-                    android:inputType="number"
-                    android:padding="10dp"/>
-
-                <EditText
-                    android:id="@+id/etUnit"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Unit*"
-                    android:inputType="text"
-                    android:padding="10dp"/>
-            </LinearLayout>
-
-            <!-- Sale Price và Discount -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <EditText
-                    android:id="@+id/etSalePrice"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Sale price*"
-                    android:inputType="numberDecimal"
-                    android:padding="10dp"/>
-
-                <EditText
-                    android:id="@+id/etDiscount"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Discount"
-                    android:inputType="numberDecimal"
-                    android:padding="10dp"
-                    android:layout_marginStart="8dp"/>
-            </LinearLayout>
-
-            <!-- Dealer Price và Manufacturer -->
-            <LinearLayout
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:orientation="horizontal"
-                android:gravity="center_vertical">
-
-                <EditText
-                    android:id="@+id/etDealerPrice"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Dealer price"
-                    android:inputType="numberDecimal"
-                    android:padding="10dp"/>
-
-                <EditText
-                    android:id="@+id/etManufacturer"
-                    android:layout_width="0dp"
-                    android:layout_weight="1"
-                    android:layout_height="wrap_content"
-                    android:hint="Manufacturer"
-                    android:padding="10dp"
-                    android:layout_marginStart="8dp"/>
-            </LinearLayout>
 
             <!-- Ảnh sản phẩm -->
             <ImageView
-                android:id="@+id/imgProduct"
+                android:id="@+id/imgUser"
                 android:layout_width="120dp"
                 android:layout_height="120dp"
                 android:layout_gravity="center"
@@ -191,7 +125,7 @@
             android:layout_marginEnd="8dp"/>
 
         <Button
-            android:id="@+id/btnSaveProduct"
+            android:id="@+id/btnSaveUser"
             android:layout_width="0dp"
             android:layout_weight="1"
             android:layout_height="60dp"
