@@ -18,6 +18,15 @@
         android:theme="@style/Theme.Project_PRM"
         tools:targetApi="35">
         <activity
+            android:name=".Activity.Admin.Order.OrderDetailActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.Admin.Order.ManageOrderActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.Admin.Account.DetailAccountActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Admin.Role.ManageRoleActivity"
             android:exported="false" />
         <activity

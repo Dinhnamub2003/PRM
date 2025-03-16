@@ -27,6 +27,8 @@ public interface ProductDao {
 
     @Query("SELECT * FROM product  Order By created_at desc")
     LiveData<List<Product>> getAllProductsAdmin();
+    @Query("SELECT name  FROM product WHERE id = :productId")
+    String getProductNameByOrder(int productId);
 
 
 }

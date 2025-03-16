@@ -6,6 +6,9 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -41,7 +44,7 @@ public class AddAccountActivity extends AppCompatActivity {
 
     private EditText etUserName, etPhone, etMail, etAddress, etPassword;
     private Spinner spinnerRole;
-    private Button btnSaveUser, btnUploadImage;
+    private Button btnSaveUser, btnUploadImage,btnRemoveImage;
     private ImageView imgUser;
     private ManageAccountViewModel manageAccountViewModel;
     private ManageRoleViewModel manageRoleViewModel;
@@ -50,6 +53,8 @@ public class AddAccountActivity extends AppCompatActivity {
     private int selectedRoleId = -1;
     private String imagePath = null;
 
+    private ImageView imgTogglePassword;
+    private boolean isPasswordVisible = false;
     private ActivityResultLauncher<Intent> imagePickerLauncher;
 
     @Override
@@ -65,7 +70,24 @@ public class AddAccountActivity extends AppCompatActivity {
         btnSaveUser = findViewById(R.id.btnSaveUser);
         btnUploadImage = findViewById(R.id.btnUploadImage);
         imgUser = findViewById(R.id.imgUser);
+        imgTogglePassword = findViewById(R.id.imgTogglePassword);
 
+        imgTogglePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    // Ẩn mật khẩu
+                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    imgTogglePassword.setImageResource(R.drawable.ic_visible_off);
+                } else {
+                    // Hiển thị mật khẩu
+                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    imgTogglePassword.setImageResource(R.drawable.ic_visible);
+                }
+                isPasswordVisible = !isPasswordVisible;
+                etPassword.setSelection(etPassword.getText().length());
+            }
+        });
         manageAccountViewModel = new ViewModelProvider(this).get(ManageAccountViewModel.class);
         manageRoleViewModel = new ViewModelProvider(this).get(ManageRoleViewModel.class);
         btnSaveUser.setOnClickListener(v -> saveUser());
@@ -87,6 +109,16 @@ public class AddAccountActivity extends AppCompatActivity {
                 }
         );
         btnUploadImage.setOnClickListener(v -> openFileChooser());
+
+
+
+        btnUploadImage.setOnClickListener(v -> {
+            openFileChooser();
+
+        });
+
+
+
         Button btnBack = findViewById(R.id.btnBack);
         btnBack.setOnClickListener(v -> finish());
         loadRoles();

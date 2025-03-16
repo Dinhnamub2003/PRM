@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="ADD PRODUCT"
+                android:text="ADD ACCOUNT"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -38,12 +38,30 @@
                 android:layout_height="wrap_content"
                 android:hint="Username*"
                 android:padding="10dp"/>
-            <EditText
-                android:id="@+id/etPassword"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password*"
-                android:padding="10dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/etPassword"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Password*"
+                    android:padding="10dp"
+                    android:inputType="textPassword"/>
+
+                <ImageView
+                    android:id="@+id/imgTogglePassword"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_visible_off"
+                    android:contentDescription="Toggle Password"/>
+            </LinearLayout>
+
 
             <TextView
                 android:layout_width="match_parent"
@@ -91,6 +109,9 @@
                 android:layout_gravity="center"
                 android:src="@drawable/img_avatar"
                 android:layout_marginTop="12dp"/>
+
+
+
 
         </LinearLayout>
     </ScrollView>

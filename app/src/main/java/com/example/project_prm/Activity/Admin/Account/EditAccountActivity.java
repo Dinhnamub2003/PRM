@@ -7,6 +7,9 @@ import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.method.HideReturnsTransformationMethod;
+import android.text.method.PasswordTransformationMethod;
+import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
@@ -52,11 +55,13 @@ public class EditAccountActivity extends AppCompatActivity {
     private Spinner spinnerRole;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private Button btnSave, btnUpload, btnBack;
+    private Button btnSave, btnUpload, btnBack,btnRemoveImage;
     private ActivityResultLauncher<Intent> imagePicker;
     private ManageAccountViewModel manageAccountViewModel;
     private List<Role> roleList = new ArrayList<>();
     private String imagePath ="";
+    private ImageView imgTogglePassword;
+    private boolean isPasswordVisible = false;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -76,6 +81,38 @@ public class EditAccountActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> saveUser());
         btnUpload.setOnClickListener(v -> openFileChooser());
         btnBack.setOnClickListener(v -> finish());
+        imgTogglePassword = findViewById(R.id.imgTogglePassword);
+
+        imgTogglePassword.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                if (isPasswordVisible) {
+                    // Ẩn mật khẩu
+                    etPassword.setTransformationMethod(PasswordTransformationMethod.getInstance());
+                    imgTogglePassword.setImageResource(R.drawable.ic_visible_off);
+                } else {
+                    // Hiển thị mật khẩu
+                    etPassword.setTransformationMethod(HideReturnsTransformationMethod.getInstance());
+                    imgTogglePassword.setImageResource(R.drawable.ic_visible);
+                }
+                isPasswordVisible = !isPasswordVisible;
+                etPassword.setSelection(etPassword.getText().length());
+            }
+        });
+        btnRemoveImage = findViewById(R.id.btnRemoveImage);
+        btnRemoveImage.setOnClickListener(v -> {
+            if (imagePath != null && !imagePath.isEmpty()) {
+                File file = new File(imagePath);
+                if (file.exists()) {
+                    file.delete(); // Xóa file ảnh khỏi bộ nhớ
+                }
+            }
+
+            imgUserEdit.setImageResource(R.drawable.img_avatar); // Đặt lại ảnh mặc định
+            imagePath = ""; // Cập nhật đường dẫn ảnh thành rỗng (hoặc null nếu cần)
+            btnRemoveImage.setVisibility(View.GONE); // Ẩn nút "Xóa ảnh"
+            saveUpdatedUserWithoutImage();
+        });
 
         manageAccountViewModel = new ViewModelProvider(this).get(ManageAccountViewModel.class);
 
@@ -92,6 +129,31 @@ public class EditAccountActivity extends AppCompatActivity {
 
         setupImagePicker();
     }
+    private void saveUpdatedUserWithoutImage() {
+        if (existingUser != null) {
+            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
+
+            User updatedUser = new User(
+                    existingUser.getId(),
+                    existingUser.getUsername(),
+                    existingUser.getPassword(),
+                    existingUser.getPhone(),
+                    existingUser.getGmail(),
+                    existingUser.getAddress(),
+                    "", // Đặt lại imagePath thành rỗng để xóa ảnh trong database
+                    existingUser.getRole_id(),
+                    existingUser.getCreated_at(),
+                    currentTime,
+                    "",
+                    0
+            );
+
+            manageAccountViewModel.update(updatedUser);
+
+            Toast.makeText(this, "Ảnh đã được xóa!", Toast.LENGTH_SHORT).show();
+        }
+    }
+
 
     private void loadUserData(int userId) {
         ManageAccountViewModel manageAccountViewModel1 = new ViewModelProvider(this).get(ManageAccountViewModel.class);
@@ -148,10 +210,14 @@ public class EditAccountActivity extends AppCompatActivity {
             if (user.getImage() != null && !user.getImage().isEmpty()) {
                 File imageFile = new File(user.getImage());
                 if (imageFile.exists()) {
-                    imgUserEdit .setImageURI(Uri.fromFile(imageFile)); // Hiển thị ảnh từ file nội bộ
+                    imgUserEdit.setImageURI(Uri.fromFile(imageFile)); // Hiển thị ảnh từ file nội bộ
                     imagePath = user.getImage();
+                    btnRemoveImage.setVisibility(View.VISIBLE); // Hiển thị nút "Xóa ảnh"
                 }
+            } else {
+                btnRemoveImage.setVisibility(View.GONE); // Ẩn nếu không có ảnh
             }
+
 
 
             if (spinnerRole != null) {

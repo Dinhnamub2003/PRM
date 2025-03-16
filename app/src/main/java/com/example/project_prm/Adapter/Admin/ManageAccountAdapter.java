@@ -16,6 +16,7 @@ import android.widget.TextView;
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
+import com.example.project_prm.Activity.Admin.Account.DetailAccountActivity;
 import com.example.project_prm.Activity.Admin.Product.DetailProductActivity;
 import com.example.project_prm.Entities.Product;
 import com.example.project_prm.Entities.User;
@@ -83,12 +84,12 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             notifyDataSetChanged();
         });
 
-//        holder.imageViewAccount.setOnClickListener(v -> {
-//            Context context = v.getContext();
-//            Intent intent = new Intent(context, DetailProductActivity.class);
-//            intent.putExtra("USER_ID", user.getId());
-//            context.startActivity(intent);
-//        });
+        holder.itemView.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, DetailAccountActivity.class);
+            intent.putExtra("USER_ID", user.getId());
+            context.startActivity(intent);
+        });
 
     }
 
@@ -154,5 +155,7 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
         }
         notifyDataSetChanged();
     }
+
+
 
 }

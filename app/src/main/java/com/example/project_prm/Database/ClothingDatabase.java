@@ -43,6 +43,7 @@ public abstract class ClothingDatabase extends RoomDatabase {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
                                     ClothingDatabase.class, "DBClothing")
                             .fallbackToDestructiveMigration()
+                            .createFromAsset("DBClothing.db")
 
                            // .addCallback(roomDatabaseCallback) // Thêm callback để insert dữ liệu mẫu
                             .build();

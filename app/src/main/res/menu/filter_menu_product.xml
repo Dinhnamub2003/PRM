@@ -3,9 +3,6 @@
 <!--    filter product-->
     <item android:id="@+id/filter_by_price_desc" android:title="Price Desc"/>
     <item android:id="@+id/filter_by_price_inc" android:title="Price Asc"/>
-<!--    filter account-->
-    <item android:id="@+id/filter_by_status_active" android:title="Account Active"/>
-    <item android:id="@+id/filter_by_status_deleted" android:title="Account Deleted"/>
 
 </menu>
 

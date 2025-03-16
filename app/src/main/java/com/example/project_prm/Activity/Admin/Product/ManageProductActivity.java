@@ -93,7 +93,7 @@ public class ManageProductActivity extends AppCompatActivity {
         ImageView ivFilter = findViewById(R.id.ivFilter);
         ivFilter.setOnClickListener(v -> {
             PopupMenu popup = new PopupMenu(ManageProductActivity.this, ivFilter);
-            popup.getMenuInflater().inflate(R.menu.filter_menu, popup.getMenu());
+            popup.getMenuInflater().inflate(R.menu.filter_menu_product, popup.getMenu());
 
             popup.setOnMenuItemClickListener(item -> {
                 if (item.getItemId() == R.id.filter_by_price_desc) {

@@ -89,7 +89,7 @@ public class ManageProductAdapter extends RecyclerView.Adapter<ManageProductAdap
             notifyDataSetChanged();
         });
 
-        holder.imageViewProduct.setOnClickListener(v -> {
+        holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
             Intent intent = new Intent(context, DetailProductActivity.class);
             intent.putExtra("PRODUCT_ID", product.getId());

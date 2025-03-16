@@ -26,7 +26,7 @@
             <TextView
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="EDIT Account"
+                android:text="EDIT ACCOUNT"
                 android:textSize="24sp"
                 android:textStyle="bold"
                 android:gravity="center"
@@ -55,12 +55,30 @@
                 android:layout_height="wrap_content"
                 android:padding="5dp"/>
 
-            <EditText
-                android:id="@+id/etPasswordEdit"
+            <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Password*"
-                android:padding="10dp"/>
+                android:orientation="horizontal"
+                android:gravity="center_vertical">
+
+                <EditText
+                    android:id="@+id/etPasswordEdit"
+                    android:layout_width="0dp"
+                    android:layout_weight="1"
+                    android:layout_height="wrap_content"
+                    android:hint="Password*"
+                    android:padding="10dp"
+                    android:inputType="textPassword"/>
+
+                <ImageView
+                    android:id="@+id/imgTogglePassword"
+                    android:layout_width="40dp"
+                    android:layout_height="40dp"
+                    android:padding="5dp"
+                    android:src="@drawable/ic_visible_off"
+                    android:contentDescription="Toggle Password"/>
+            </LinearLayout>
+
 
             <EditText
                 android:id="@+id/etMailEdit"
@@ -91,6 +109,16 @@
                 android:layout_gravity="center"
                 android:src="@drawable/img_avatar"
                 android:layout_marginTop="12dp"/>
+
+            <ImageButton
+                android:id="@+id/btnRemoveImage"
+                android:layout_width="40dp"
+                android:layout_height="40dp"
+                android:src="@drawable/ic_remove_image"
+                android:background="@drawable/bg_circle"
+                android:contentDescription="Remove Image"
+                android:padding="10dp"
+                android:scaleType="centerInside"/>
 
 
         </LinearLayout>

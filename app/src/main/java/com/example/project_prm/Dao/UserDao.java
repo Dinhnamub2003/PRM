@@ -32,4 +32,7 @@ public interface UserDao {
     @Query("UPDATE user SET isDelete = 0 WHERE id = :userId")
     void restoreUser(int userId);
 
+    @Query("SELECT username FROM user WHERE id = :userId")
+    String getUserNameByIdOrder(int userId);
+
 }
