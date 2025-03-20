@@ -25,6 +25,8 @@ public class User {
     private String updated_at;
     private String deleted_at;
     private int isDelete;
+    private boolean isGoogleUser;
+
 
     public User() {
     }
@@ -56,7 +58,6 @@ public class User {
         this.deleted_at = deleted_at;
         this.isDelete = isDelete;
     }
-
     public int getId() {
         return id;
     }
@@ -151,5 +152,13 @@ public class User {
 
     public void setIsDelete(int isDelete) {
         this.isDelete = isDelete;
+    }
+
+    public boolean isGoogleUser() {
+        return isGoogleUser;
+    }
+
+    public void setGoogleUser(boolean googleUser) {
+        isGoogleUser = googleUser;
     }
 }

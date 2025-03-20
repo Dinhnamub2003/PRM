@@ -37,12 +37,15 @@ dependencies {
     implementation(libs.activity)
     implementation(libs.constraintlayout)
     implementation ("androidx.paging:paging-runtime:3.1.1")
-
+    implementation(platform(libs.firebase.bom))
     // Room Database
     implementation(libs.room.runtime)
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
+    implementation(libs.firebase.auth)
     annotationProcessor(libs.room.compiler)
+    implementation(libs.firebase.auth.v2231)
+    implementation(libs.play.services.auth)
 
     // DataStore
     implementation(libs.datastore.core.android)

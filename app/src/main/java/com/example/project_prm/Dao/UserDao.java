@@ -16,17 +16,6 @@ public interface UserDao {
     @Delete
     void delete(User user);
 
-    @Query("SELECT * FROM user WHERE id = :userId")
-    User getUserById(int userId);
-
-    @Query("SELECT * FROM user WHERE username = :username AND password = :password")
-    User login(String username, String password);
-
-    @Query("SELECT * FROM user Order By created_at desc")
-    LiveData<List<User>> getAllUsers();
-
-
-
     @Query("UPDATE user SET isDelete = 1 WHERE id = :userId")
     void softDeleteUser(int userId);
     @Query("UPDATE user SET isDelete = 0 WHERE id = :userId")
@@ -36,5 +25,37 @@ public interface UserDao {
     String getUserNameByIdOrder(int userId);
     @Query("SELECT COUNT(*) FROM user")
     int getTotalAccounts();
+    @Query("SELECT * FROM user WHERE id = :userId AND isDelete = 0")
+    User getUserById(int userId);
 
+    @Query("UPDATE user SET username = :username, password = :password, gmail = :email, phone = :phone, address = :address, image = :image, updated_at = :updatedAt WHERE id = :userId")
+    void updateUserProfile(int userId, String username, String password, String email, String phone, String address, String image, String updatedAt);
+
+    @Query("SELECT * FROM user WHERE username = :username AND isDelete = 0")
+    User getUserByUsername(String username);
+
+    @Query("SELECT * FROM user WHERE gmail = :email AND isDelete = 0")
+    User getUserByEmail(String email);
+
+    @Query("SELECT * FROM user WHERE username = :username AND password = :password AND isDelete = 0")
+    User login(String username, String password);
+
+    @Query("SELECT * FROM user WHERE gmail = :email AND isDelete = 0 AND isGoogleUser = 1")
+    User googleLogin(String email);
+
+    @Query("SELECT * FROM user WHERE isDelete = 0")
+  List<User> getAllUsers();
+    @Query("SELECT * FROM user WHERE isDelete = 0")
+    LiveData< List<User>> getAllUsersAdmin();
+    @Query("SELECT * FROM user WHERE id = :userId AND isDelete = 0")
+    User getUserByIdSync(int userId);
+
+    @Query("UPDATE user SET password = :newPassword, updated_at = :updatedAt WHERE id = :userId AND password = :oldPassword")
+    int changePassword(int userId, String oldPassword, String newPassword, String updatedAt);
+
+    @Query("SELECT * FROM user WHERE username = :username AND gmail = :email AND isDelete = 0")
+    User getUserForPasswordReset(String username, String email);
+
+    @Query("UPDATE user SET password = :newPassword, updated_at = :updatedAt WHERE id = :userId")
+    void updatePassword(int userId, String newPassword, String updatedAt);
 }

@@ -99,7 +99,7 @@ public class EditAccountActivity extends AppCompatActivity {
                 etPassword.setSelection(etPassword.getText().length());
             }
         });
-        btnRemoveImage = findViewById(R.id.btnRemoveImage);
+
         btnRemoveImage.setOnClickListener(v -> {
             if (imagePath != null && !imagePath.isEmpty()) {
                 File file = new File(imagePath);

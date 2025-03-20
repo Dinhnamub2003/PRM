@@ -19,7 +19,7 @@ public class ManageAccountViewModel extends AndroidViewModel {
     public ManageAccountViewModel(@NonNull Application application) {
         super(application);
         userRepository = new UserRepository(application);
-        allUser = userRepository.getAllUsers();
+        allUser = userRepository.getAllUserAdmin();
     }
 
     public LiveData<List<User>> getAllUser(){
