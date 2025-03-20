@@ -139,19 +139,18 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<ManageOrderAdapter.
         selectedPosition = -1;
         notifyDataSetChanged();
     }
-    public void filter(String query, String status) {
-        currentQuery = query.toLowerCase();
+    public void filter( String status) {
+
         orderList.clear();
 
-        if (currentQuery.isEmpty() && status.equals("All")) {
+        if (  status.equals("All")) {
             orderList.addAll(originalList);
         } else {
             for (Order order : originalList) {
-                String username = userDao.getUserNameByIdOrder(order.getUser_id());
-                boolean matchesName = username.toLowerCase().contains(currentQuery);
+
                 boolean matchesStatus = status.equals("All") || order.getStatus().equals(status);
 
-                if (matchesName && matchesStatus) {
+                if ( matchesStatus) {
                     orderList.add(order);
                 }
             }

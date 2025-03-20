@@ -30,5 +30,8 @@ public interface ProductDao {
     @Query("SELECT name  FROM product WHERE id = :productId")
     String getProductNameByOrder(int productId);
 
+    @Query("SELECT COUNT(*) FROM Product")
+    int getTotalProducts();
+
 
 }

@@ -22,6 +22,7 @@ import com.example.project_prm.Activity.Admin.Product.EditProductActivity;
 import com.example.project_prm.Activity.Admin.Product.ManageProductActivity;
 import com.example.project_prm.Adapter.Admin.ManageAccountAdapter;
 import com.example.project_prm.Adapter.Admin.ManageProductAdapter;
+import com.example.project_prm.BaseActivity;
 import com.example.project_prm.Entities.Product;
 import com.example.project_prm.Entities.User;
 import com.example.project_prm.R;
@@ -30,14 +31,14 @@ import com.example.project_prm.ViewModel.Admin.ManageProductViewModel;
 
 import java.util.ArrayList;
 
-public class ManageAccountActivity extends AppCompatActivity {
+public class ManageAccountActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private ManageAccountAdapter manageAccountAdapter;
     private ManageAccountViewModel manageAccountViewModel;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_account);
+        getLayoutInflater().inflate(R.layout.activity_manage_account, findViewById(R.id.content_frame));
         manageAccountAdapter = new ManageAccountAdapter(new ArrayList<>());
         recyclerView = findViewById(R.id.recyclerViewAccount);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));

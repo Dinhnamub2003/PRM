@@ -16,13 +16,14 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_prm.Adapter.Admin.ManageProductAdapter;
+import com.example.project_prm.BaseActivity;
 import com.example.project_prm.Entities.Product;
 import com.example.project_prm.R;
 import com.example.project_prm.ViewModel.Admin.ManageProductViewModel;
 
 import java.util.ArrayList;
 
-public class ManageProductActivity extends AppCompatActivity {
+public class ManageProductActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private ManageProductAdapter productAdapter;
     private ManageProductViewModel manageProductViewModel;
@@ -35,7 +36,7 @@ public class ManageProductActivity extends AppCompatActivity {
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_product);
+        getLayoutInflater().inflate(R.layout.activity_manage_product, findViewById(R.id.content_frame));
         productAdapter = new ManageProductAdapter(new ArrayList<>());
 
         recyclerView = findViewById(R.id.recyclerView);

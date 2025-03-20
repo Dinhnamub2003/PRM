@@ -18,6 +18,12 @@
         android:theme="@style/Theme.Project_PRM"
         tools:targetApi="35">
         <activity
+            android:name=".Activity.Admin.Statistic.StatisticActivity"
+            android:exported="false" />
+        <activity
+            android:name=".BaseActivity"
+            android:exported="false" />
+        <activity
             android:name=".Activity.Admin.Order.OrderDetailActivity"
             android:exported="false" />
         <activity

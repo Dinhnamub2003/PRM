@@ -24,8 +24,17 @@ public interface OrderDao {
 
     @Query("SELECT * FROM orders order by created_at desc")
     LiveData<List<Order>> getAllOrders();
+
+    // Update order
     @Query("UPDATE orders SET status = 'Completed' WHERE id = :orderId")
     void acceptOrder(int orderId);
     @Query("UPDATE orders SET status = 'Cancelled' WHERE id = :orderId")
     void rejectOrder(int orderId);
+
+    // Statistic
+    @Query("SELECT COUNT(*) FROM orders WHERE created_at = date('now')")
+    int getTodayOrders(); // Số đơn hàng hôm nay
+
+    @Query("SELECT COUNT(*) FROM orders")
+    int getTotalOrders();
 }

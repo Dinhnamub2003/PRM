@@ -34,5 +34,7 @@ public interface UserDao {
 
     @Query("SELECT username FROM user WHERE id = :userId")
     String getUserNameByIdOrder(int userId);
+    @Query("SELECT COUNT(*) FROM user")
+    int getTotalAccounts();
 
 }

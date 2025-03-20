@@ -18,6 +18,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_prm.Adapter.Admin.ManageOrderAdapter;
+import com.example.project_prm.BaseActivity;
 import com.example.project_prm.Entities.Order;
 import com.example.project_prm.R;
 import com.example.project_prm.Repository.OrderRepository;
@@ -25,26 +26,24 @@ import com.example.project_prm.ViewModel.Admin.ManageOrderViewModel;
 
 import java.util.ArrayList;
 
-public class ManageOrderActivity extends AppCompatActivity {
+public class ManageOrderActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private ManageOrderViewModel manageOrderViewModel;
     private ImageButton btnAccept, btnReject;
     private ManageOrderAdapter manageOrderAdapter;
     private OrderRepository orderRepository;
-    private EditText etSearch;
     private ImageView ivFilter; // Thêm ImageView filter
     private String selectedStatus = "All"; // Trạng thái filter mặc định
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
-        setContentView(R.layout.activity_manage_order);
-
+//        setContentView(R.layout.activity_manage_order);
+        getLayoutInflater().inflate(R.layout.activity_manage_order, findViewById(R.id.content_frame));
         recyclerView = findViewById(R.id.recyclerViewOrder);
         btnAccept = findViewById(R.id.btnAcceptOrder);
         btnReject = findViewById(R.id.btnRejectOrder);
-        etSearch = findViewById(R.id.etSearch);
-        ivFilter = findViewById(R.id.ivFilter); // Ánh xạ ImageView filter
+        ivFilter = findViewById(R.id.ivFilterOrder); // Ánh xạ ImageView filter
 
         manageOrderAdapter = new ManageOrderAdapter(this, new ArrayList<>());
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -54,19 +53,6 @@ public class ManageOrderActivity extends AppCompatActivity {
         manageOrderViewModel = new ViewModelProvider(this).get(ManageOrderViewModel.class);
         manageOrderViewModel.getAllOrder().observe(this, manageOrderAdapter::setOrderList);
 
-        // Xử lý tìm kiếm theo username
-        etSearch.addTextChangedListener(new android.text.TextWatcher() {
-            @Override
-            public void beforeTextChanged(CharSequence s, int start, int count, int after) {}
-
-            @Override
-            public void onTextChanged(CharSequence s, int start, int before, int count) {
-                manageOrderAdapter.filter(s.toString(), selectedStatus);
-            }
-
-            @Override
-            public void afterTextChanged(android.text.Editable s) {}
-        });
 
         // Xử lý khi nhấn vào icon Filter
         ivFilter.setOnClickListener(v -> showFilterMenu(v));
@@ -96,10 +82,10 @@ public class ManageOrderActivity extends AppCompatActivity {
                 selectedStatus = "All";
             }
 
-            String query = etSearch.getText().toString();
-            manageOrderAdapter.filter(query, selectedStatus);
+            manageOrderAdapter.filter( selectedStatus);
             return true;
         });
+        popup.show();
 
     }
 

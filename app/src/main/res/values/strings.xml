@@ -1,3 +1,20 @@
 <resources>
     <string name="app_name">Project_PRM</string>
+    <string name="hello_world">Hello World!</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="my_app_title">Demo App</string>
+    <string name="import_camera">Import Camera</string>
+    <string name="gallery">Gallery</string>
+    <string name="send">Send</string>
+    <string name="slideshow">Slideshow</string>
+    <string name="tools">Tools</string>
+    <string name="share">Share</string>
+    <string name="communicate">Communicate</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="chose_send">Select Send</string>
+    <string name="chose_gallery">Choose gallery</string>
+    <string name="chose_slideshow">Choose </string>
+    <string name="chose_share">Choose share</string>
+    <string name="chose_camera">Choose camera</string>
 </resources>

@@ -1,0 +1,64 @@
+<androidx.constraintlayout.widget.ConstraintLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/main"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:padding="16dp"
+    android:background="@color/light_gray"
+    tools:context=".Activity.Admin.Statistic.StatisticActivity">
+
+    <!-- Tiêu đề -->
+    <TextView
+        android:id="@+id/tvTitle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Statistics Overview"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:paddingBottom="10dp"/>
+
+    <!-- Biểu đồ cột trong CardView -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="320dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:background="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/tvTitle"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp">
+
+        <com.github.mikephil.charting.charts.BarChart
+            android:id="@+id/barChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
+
+    <!-- Biểu đồ tròn trong CardView -->
+    <androidx.cardview.widget.CardView
+        android:layout_width="0dp"
+        android:layout_height="320dp"
+        app:cardCornerRadius="12dp"
+        app:cardElevation="6dp"
+        android:background="@android:color/white"
+        app:layout_constraintTop_toBottomOf="@id/barChart"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        android:padding="10dp"
+        tools:ignore="NotSibling">
+
+        <com.github.mikephil.charting.charts.PieChart
+            android:id="@+id/pieChart"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"/>
+    </androidx.cardview.widget.CardView>
+
+
+</androidx.constraintlayout.widget.ConstraintLayout>

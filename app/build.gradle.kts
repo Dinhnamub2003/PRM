@@ -40,10 +40,15 @@ dependencies {
 
     // Room Database
     implementation(libs.room.runtime)
+    implementation(libs.navigation.fragment)
+    implementation(libs.navigation.ui)
     annotationProcessor(libs.room.compiler)
 
     // DataStore
     implementation(libs.datastore.core.android)
+
+    // Chart
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 
     // Lombok
     implementation("org.projectlombok:lombok:1.18.30")

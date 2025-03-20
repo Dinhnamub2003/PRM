@@ -31,17 +31,9 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
-        <EditText
-            android:id="@+id/etSearch"
-            android:layout_width="0dp"
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:hint="Search"
-            android:drawableStart="@android:drawable/ic_menu_search"
-            android:padding="8dp"/>
 
         <ImageView
-            android:id="@+id/ivFilter"
+            android:id="@+id/ivFilterOrder"
             android:layout_width="40dp"
             android:layout_height="40dp"
             android:src="@android:drawable/ic_menu_sort_by_size"
