@@ -63,7 +63,6 @@ public class ProfileActivity extends AppCompatActivity {
         btnBack = findViewById(R.id.btnBack);
         btnSettings = findViewById(R.id.btnSettings);
         btnChangePassword = findViewById(R.id.btnChangePassword);
-        btnGoResetPassword = findViewById(R.id.btnGoResetPassword);
         btnCamera = findViewById(R.id.btnCamera);
         ivProfilePicture = findViewById(R.id.ivProfilePicture);
         tvUserId = findViewById(R.id.tvUserId);
