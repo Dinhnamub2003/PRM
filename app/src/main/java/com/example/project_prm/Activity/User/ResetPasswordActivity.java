@@ -2,6 +2,7 @@ package com.example.project_prm.Activity.User;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -25,6 +26,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.reset_password);
 
         userId = getIntent().getIntExtra("USER_ID", -1);
+        Log.d("ResetPasswordActivity", "Received userId: " + userId);
         if (userId == -1) {
             Toast.makeText(this, "Error: User information not found", Toast.LENGTH_SHORT).show();
             finish();
@@ -34,6 +36,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         etNewPassword = findViewById(R.id.etNewPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
         Button btnResetPassword = findViewById(R.id.btnResetPassword);
+        Button btnBack = findViewById(R.id.btnBack);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 
@@ -47,6 +50,7 @@ public class ResetPasswordActivity extends AppCompatActivity {
         });
 
         btnResetPassword.setOnClickListener(v -> onResetPasswordClicked());
+        btnBack.setOnClickListener(v -> finish());
     }
 
     private void onResetPasswordClicked() {

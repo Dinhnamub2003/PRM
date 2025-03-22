@@ -27,7 +27,7 @@ import com.google.android.material.navigation.NavigationView;
 import java.util.concurrent.ExecutorService;
 
 
-public class MainActivity extends AppCompatActivity {
+public class MainActivity extends BaseActivity {
 
     private static final String PREF_NAME = "LoginPrefs";
     private static final String KEY_REMEMBER = "remember";
@@ -45,12 +45,8 @@ public class MainActivity extends AppCompatActivity {
             return;
         }
 
-        EdgeToEdge.enable(this);
-        setContentView(R.layout.activity_main);
-
-
-        ClothingDatabase db = ClothingDatabase.getInstance(this);
-        ExecutorService executorService = ClothingDatabase.getDatabaseWriteExecutor();
+//        EdgeToEdge.enable(this);
+        getLayoutInflater().inflate(R.layout.activity_main, findViewById(R.id.content_frame));
 
         if (getIntent().hasExtra("USER_ID")) {
             userId = getIntent().getIntExtra("USER_ID", -1);
@@ -59,34 +55,7 @@ public class MainActivity extends AppCompatActivity {
             userId = getUserIdFromPreferences();
         }
 
-        TextView tvHello = findViewById(R.id.tvHelloWorld);
 
-        executorService.execute(() -> {
-            User user = db.userDao().getUserByIdSync(userId);
-            mainHandler.post(() -> {
-                if (user != null && user.getUsername() != null) {
-                    tvHello.setText("Hello, " + user.getUsername());
-                } else {
-                    tvHello.setText("Hello, User");
-                }
-            });
-        });
-
-
-
-        findViewById(R.id.btnOpenProfileActivity).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, ProfileActivity.class);
-            intent.putExtra("USER_ID", userId);
-            startActivity(intent);
-        });
-
-        findViewById(R.id.btnChangePassword).setOnClickListener(v -> {
-            Intent intent = new Intent(MainActivity.this, PasswordChangeActivity.class);
-            intent.putExtra("USER_ID", userId);
-            startActivity(intent);
-        });
-
-        findViewById(R.id.btnLogout).setOnClickListener(v -> showLogoutConfirmationDialog());
     }
 
     private void showLogoutConfirmationDialog() {

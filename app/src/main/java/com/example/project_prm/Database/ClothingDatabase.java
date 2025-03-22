@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {
         User.class, Role.class, Category.class, Product.class,
         Order.class, OrderDetail.class, Cart.class, Rating.class
-}, version = 1, exportSchema = false)
+}, version = 2, exportSchema = false)
 public abstract class ClothingDatabase extends RoomDatabase {
 
     private static volatile ClothingDatabase INSTANCE;

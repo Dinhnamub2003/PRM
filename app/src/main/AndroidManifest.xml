@@ -18,6 +18,21 @@
         android:theme="@style/Theme.Project_PRM"
         tools:targetApi="35">
         <activity
+            android:name=".Activity.User.LoginActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.User.PasswordChangeActivity"
+            android:exported="false" />
+        <activity android:name=".Activity.User.ProfileActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.User.ForgotPasswordActivity"
+            android:exported="false" />
+        <activity
+            android:name=".Activity.User.ResetPasswordActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".Activity.Admin.Statistic.StatisticActivity"
             android:exported="false" />
         <activity

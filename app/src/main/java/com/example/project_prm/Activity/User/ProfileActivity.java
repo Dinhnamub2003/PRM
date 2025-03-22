@@ -20,6 +20,8 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 
+import com.example.project_prm.Activity.Admin.Product.AddProductActivity;
+import com.example.project_prm.Activity.Admin.Product.ManageProductActivity;
 import com.example.project_prm.R;
 import com.example.project_prm.ViewModel.User.UserViewModel;
 
@@ -29,10 +31,10 @@ public class ProfileActivity extends AppCompatActivity {
 
     private UserViewModel userViewModel;
 
-    private ImageButton btnBack, btnSettings, btnCamera;
+    private ImageButton  btnSettings, btnCamera, btnBack;
     private ImageView ivProfilePicture;
     private EditText etFileUpload, etName, etEmail, etPhoneNumber, etZipCode;
-    private Button btnBrowse, btnSave;
+    private Button btnBrowse, btnSave, btnChangePassword, btnGoResetPassword;
     private TextView tvUserId;
     private File profilePictureFile;
     private int userId;
@@ -60,6 +62,8 @@ public class ProfileActivity extends AppCompatActivity {
     private void initializeComponents() {
         btnBack = findViewById(R.id.btnBack);
         btnSettings = findViewById(R.id.btnSettings);
+        btnChangePassword = findViewById(R.id.btnChangePassword);
+        btnGoResetPassword = findViewById(R.id.btnGoResetPassword);
         btnCamera = findViewById(R.id.btnCamera);
         ivProfilePicture = findViewById(R.id.ivProfilePicture);
         tvUserId = findViewById(R.id.tvUserId);
@@ -87,6 +91,14 @@ public class ProfileActivity extends AppCompatActivity {
             browseFile.launch(intent);
         });
         btnSave.setOnClickListener(v -> onSaveButtonClicked());
+        btnChangePassword.setOnClickListener(v -> {
+            Intent intent = new Intent(ProfileActivity.this, PasswordChangeActivity.class);
+            intent.putExtra("USER_ID", userId);
+            startActivity(intent);
+        });
+
+
+
     }
 
     private final ActivityResultLauncher<Intent> pickImage = registerForActivityResult(

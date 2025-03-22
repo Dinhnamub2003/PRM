@@ -2,8 +2,9 @@
 <menu xmlns:android="http://schemas.android.com/apk/res/android">
 
     <group android:checkableBehavior="none">
+
         <item
-            android:id="@+id/nav_home"
+            android:id="@+id/nav_statistic"
             android:icon="@drawable/ic_menu_camera"
             android:title="Statistic" />
         <item
@@ -18,8 +19,16 @@
             android:id="@+id/nav_order"
             android:icon="@drawable/ic_menu_manage"
             android:title="Order" />
+
+    </group>
+    <group android:checkableBehavior="none">
         <item
-            android:id="@+id/nav_view"
+            android:id="@+id/nav_profile"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Profile" />
+
+        <item
+            android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_manage"
             android:title="Logout" />
     </group>
