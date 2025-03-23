@@ -22,5 +22,7 @@ public interface ProductDao {
     @Query("SELECT * FROM product  Order By created_at desc")
     LiveData<List<Product>> getAllProductsAdmin();
 
+    @Query("SELECT * FROM product ORDER BY created_at DESC")
+    LiveData<List<Product>> getAllProductsUser();
 
 }
