@@ -15,17 +15,24 @@ import java.util.concurrent.Executors;
 public class ProductRepository {
     private ProductDao productDao;
     private LiveData<List<Product>> allProducts;
+
+    private LiveData<List<Product>> allProductsForUser;
     private ExecutorService executorService;
 
     public ProductRepository(Application application) {
         ClothingDatabase db = ClothingDatabase.getInstance(application);
         productDao = db.productDao();
         allProducts = productDao.getAllProductsAdmin();
+        allProductsForUser = productDao.getAllProductsUser();
         executorService = Executors.newSingleThreadExecutor();
     }
 
     public LiveData<List<Product>> getAllProducts() {
         return allProducts;
+    }
+
+    public LiveData<List<Product>> getAllProductsForUser() {
+        return allProductsForUser;
     }
 
     public void insert(Product product) {

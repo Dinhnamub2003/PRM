@@ -31,6 +31,12 @@
             android:name=".Activity.Admin.Product.ProductActivity"
             android:exported="true" />
         <activity
+            android:name=".Activity.User.Product.ProductListActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.User.Cart.CartActivity"
+            android:exported="true" />
+        <activity
             android:name=".MainActivity"
             android:exported="true">
             <intent-filter>
