@@ -30,8 +30,10 @@ public interface ProductDao {
     @Query("SELECT name  FROM product WHERE id = :productId")
     String getProductNameByOrder(int productId);
 
-    @Query("SELECT COUNT(*) FROM Product")
+    @Query("SELECT COUNT(*) FROM Product where isDelete = 0")
     int getTotalProducts();
+    @Query("SELECT * FROM product  Order By created_at desc")
+    LiveData<List<Product>> getAllProductsUser();
 
 
 }

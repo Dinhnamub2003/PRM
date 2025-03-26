@@ -1,4 +1,4 @@
-package com.example.project_prm.Activity.User;
+package com.example.project_prm.Activity.User.Profile;
 
 import android.os.Bundle;
 import android.text.TextUtils;

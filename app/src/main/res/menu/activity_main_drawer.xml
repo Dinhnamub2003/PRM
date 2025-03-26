@@ -21,16 +21,28 @@
             android:title="Order" />
 
     </group>
+    <item
+        android:title="────────────"
+        android:enabled="false"
+        android:icon="@android:color/transparent"/>
     <group android:checkableBehavior="none">
+        <item
+            android:id="@+id/nav_live"
+            android:icon="@drawable/ic_menu_slideshow"
+            android:title="Live" />
         <item
             android:id="@+id/nav_profile"
             android:icon="@drawable/ic_menu_manage"
             android:title="Profile" />
-
+        <item
+            android:id="@+id/nav_order_history"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="Order History" />
         <item
             android:id="@+id/nav_logout"
             android:icon="@drawable/ic_menu_manage"
             android:title="Logout" />
+
     </group>
 
 

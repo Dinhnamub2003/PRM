@@ -21,4 +21,6 @@ public interface RoleDao {
 
     @Query("SELECT * FROM role")
     LiveData<List<Role>> getAllRolesAdmin();
+
+
 }

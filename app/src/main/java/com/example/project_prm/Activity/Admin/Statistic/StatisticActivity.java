@@ -2,6 +2,7 @@ package com.example.project_prm.Activity.Admin.Statistic;
 
 import android.graphics.Color;
 import android.os.Bundle;
+import android.util.Log;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
@@ -48,13 +49,47 @@ public class StatisticActivity extends BaseActivity {
         observeData();
     }
     private void observeData() {
-        viewModel.getTodayOrders().observe(this, todayOrders ->
-                viewModel.getTotalOrders().observe(this, totalOrders ->
-                        setupBarChart(todayOrders, totalOrders)));
+        // Quan sát dữ liệu đơn hàng trong ngày
+        viewModel.getTodayOrders().observe(this, todayOrders -> {
+            Log.d("Order in day", String.valueOf(todayOrders)); // Ghi log đúng cách
+            updateBarChart();
+        });
 
-        viewModel.getTotalProducts().observe(this, totalProducts ->
-                viewModel.getTotalAccounts().observe(this, totalAccounts ->
-                        setupPieChart(totalProducts, totalAccounts)));
+        // Quan sát tổng số đơn hàng
+        viewModel.getTotalOrders().observe(this, totalOrders -> {
+            Log.d("Total Orders", String.valueOf(totalOrders));
+            updateBarChart();
+        });
+
+        // Quan sát tổng số sản phẩm
+        viewModel.getTotalProducts().observe(this, totalProducts -> {
+            Log.d("Total Products", String.valueOf(totalProducts));
+            updatePieChart();
+        });
+
+        // Quan sát tổng số tài khoản
+        viewModel.getTotalAccounts().observe(this, totalAccounts -> {
+            Log.d("Total Accounts", String.valueOf(totalAccounts));
+            updatePieChart();
+        });
+    }
+    private void updateBarChart() {
+        Integer todayOrders = viewModel.getTodayOrders().getValue();
+        Integer totalOrders = viewModel.getTotalOrders().getValue();
+
+        if (todayOrders != null && totalOrders != null) {
+            setupBarChart(todayOrders, totalOrders);
+        }
+    }
+
+    // Cập nhật biểu đồ tròn
+    private void updatePieChart() {
+        Integer totalProducts = viewModel.getTotalProducts().getValue();
+        Integer totalAccounts = viewModel.getTotalAccounts().getValue();
+
+        if (totalProducts != null && totalAccounts != null) {
+            setupPieChart(totalProducts, totalAccounts);
+        }
     }
     private void setupBarChart(int todayOrders, int totalOrders) {
         barChart.getDescription().setEnabled(false);

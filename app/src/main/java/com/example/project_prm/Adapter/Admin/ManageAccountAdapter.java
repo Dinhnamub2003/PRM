@@ -33,12 +33,14 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
     private List<User> originalList = new ArrayList<>();
     private String currentQuery = "";
     private int selectedPosition = -1;
+    private int currentUserId;
 
-    public ManageAccountAdapter(List<User> userList){
+    public ManageAccountAdapter(List<User> userList, int currentUserId){
         if(userList != null){
         this.userList = new ArrayList<>(userList);
         this.originalList = new ArrayList<>(userList);
     }
+        this.currentUserId = currentUserId;
     }
 
     @NonNull
@@ -74,20 +76,25 @@ public class ManageAccountAdapter extends RecyclerView.Adapter<ManageAccountAdap
             holder.imageViewAccount.setImageResource(R.drawable.img_avatar);
         }
         // Xử lý chọn radio button
-        holder.btnSelect.setChecked(selectedPosition == position);
-        holder.btnSelect.setOnClickListener(v -> {
-            if (selectedPosition == position) {
-                selectedPosition = -1;
-            } else {
-                selectedPosition = position;
-            }
-            notifyDataSetChanged();
-        });
+        if (user.getId() == currentUserId) {
+            holder.btnSelect.setVisibility(View.GONE);
+        } else {
+            holder.btnSelect.setVisibility(View.VISIBLE);
+            holder.btnSelect.setChecked(selectedPosition == position);
+            holder.btnSelect.setOnClickListener(v -> {
+                if (selectedPosition == position) {
+                    selectedPosition = -1;
+                } else {
+                    selectedPosition = position;
+                }
+                notifyDataSetChanged();
+            });
+        }
 
         holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
             Intent intent = new Intent(context, DetailAccountActivity.class);
-            intent.putExtra("USER_ID", user.getId());
+            intent.putExtra("ID", user.getId());
             context.startActivity(intent);
         });
 

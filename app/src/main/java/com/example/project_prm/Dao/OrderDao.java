@@ -8,7 +8,7 @@ import java.util.List;
 @Dao
 public interface OrderDao {
     @Insert(onConflict = OnConflictStrategy.REPLACE)
-    void insert(Order order);
+    long insert(Order order);
 
     @Update
     void update(Order order);
@@ -32,8 +32,8 @@ public interface OrderDao {
     void rejectOrder(int orderId);
 
     // Statistic
-    @Query("SELECT COUNT(*) FROM orders WHERE created_at = date('now')")
-    int getTodayOrders(); // Số đơn hàng hôm nay
+    @Query("SELECT COUNT(*) FROM orders WHERE created_at BETWEEN datetime('now', 'start of day') AND datetime('now', 'start of day', '+1 day', '-1 second')")
+    int getTodayOrders();
 
     @Query("SELECT COUNT(*) FROM orders")
     int getTotalOrders();

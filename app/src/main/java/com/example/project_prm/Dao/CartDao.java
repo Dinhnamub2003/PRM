@@ -1,12 +1,14 @@
 package com.example.project_prm.Dao;
 
+import androidx.lifecycle.LiveData;
 import androidx.room.*;
 import com.example.project_prm.Entities.Cart;
-import java.util.List;
+import com.example.project_prm.Entities.CartWithProduct;
 
+import java.util.List;
 @Dao
 public interface CartDao {
-    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    @Insert
     void insert(Cart cart);
 
     @Update
@@ -15,6 +17,12 @@ public interface CartDao {
     @Delete
     void delete(Cart cart);
 
-    @Query("SELECT * FROM cart WHERE user_id = :userId")
-    List<Cart> getCartByUser(int userId);
+    @Query("SELECT cart.*, product.name AS productName, product.sale_price AS productPrice " +
+            "FROM cart " +
+            "INNER JOIN product ON cart.product_id = product.id " +
+            "WHERE cart.user_id = :userId")
+    LiveData<List<CartWithProduct>> getCartItemsWithProductByUserId(int userId);
+
+    @Query("DELETE FROM cart WHERE user_id = :userId")
+    void deleteAllCartItemsByUserId(int userId);
 }

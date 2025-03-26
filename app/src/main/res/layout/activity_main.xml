@@ -7,6 +7,14 @@
     android:layout_height="match_parent"
     tools:context=".MainActivity">
 
+    <LinearLayout
+        android:orientation="vertical"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <include layout="@layout/activity_product_list"/>
+    </LinearLayout>
+
     <com.google.android.material.navigation.NavigationView
         android:id="@+id/nav_view"
         android:layout_width="wrap_content"
@@ -14,5 +22,7 @@
         android:layout_gravity="start"
         app:headerLayout="@layout/nav_header_main"
         app:menu="@menu/activity_main_drawer"/>
+
+
 
 </androidx.drawerlayout.widget.DrawerLayout>

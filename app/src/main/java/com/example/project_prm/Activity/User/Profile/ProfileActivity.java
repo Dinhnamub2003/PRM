@@ -1,4 +1,4 @@
-package com.example.project_prm.Activity.User;
+package com.example.project_prm.Activity.User.Profile;
 
 import android.annotation.SuppressLint;
 import android.app.Activity;
@@ -20,8 +20,6 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
 
-import com.example.project_prm.Activity.Admin.Product.AddProductActivity;
-import com.example.project_prm.Activity.Admin.Product.ManageProductActivity;
 import com.example.project_prm.R;
 import com.example.project_prm.ViewModel.User.UserViewModel;
 
@@ -34,7 +32,7 @@ public class ProfileActivity extends AppCompatActivity {
     private ImageButton  btnSettings, btnCamera, btnBack;
     private ImageView ivProfilePicture;
     private EditText etFileUpload, etName, etEmail, etPhoneNumber, etZipCode;
-    private Button btnBrowse, btnSave, btnChangePassword, btnGoResetPassword;
+    private Button btnBrowse, btnSave, btnChangePassword;
     private TextView tvUserId;
     private File profilePictureFile;
     private int userId;
@@ -73,7 +71,6 @@ public class ProfileActivity extends AppCompatActivity {
         etZipCode = findViewById(R.id.etZipCode);
         btnBrowse = findViewById(R.id.btnBrowse);
         btnSave = findViewById(R.id.btnSave);
-
         tvUserId.setText("UserID: " + userId);
     }
 

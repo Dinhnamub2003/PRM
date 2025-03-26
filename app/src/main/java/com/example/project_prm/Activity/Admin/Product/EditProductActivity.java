@@ -179,7 +179,7 @@ public class EditProductActivity extends AppCompatActivity {
         String unit = etUnitEdit.getText().toString().trim();
 
         if (name.isEmpty() || brand.isEmpty() || productCode.isEmpty() || stockStr.isEmpty() || salePriceStr.isEmpty()) {
-            Toast.makeText(this, "Vui lòng nhập đầy đủ thông tin", Toast.LENGTH_SHORT).show();
+            Toast.makeText(this, "Enter full require information", Toast.LENGTH_SHORT).show();
             return;
         }
 

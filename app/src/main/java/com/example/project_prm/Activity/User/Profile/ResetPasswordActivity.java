@@ -1,10 +1,10 @@
-package com.example.project_prm.Activity.User;
+package com.example.project_prm.Activity.User.Profile;
 
 import android.content.Intent;
 import android.os.Bundle;
-import android.util.Log;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.Toast;
 
 import androidx.appcompat.app.AppCompatActivity;
@@ -18,6 +18,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
     private UserViewModel userViewModel;
     private EditText etNewPassword;
     private EditText etConfirmPassword;
+    private ImageButton btnBack;
+    private Button btnResetPassword;
     private int userId;
 
     @Override
@@ -26,7 +28,6 @@ public class ResetPasswordActivity extends AppCompatActivity {
         setContentView(R.layout.reset_password);
 
         userId = getIntent().getIntExtra("USER_ID", -1);
-        Log.d("ResetPasswordActivity", "Received userId: " + userId);
         if (userId == -1) {
             Toast.makeText(this, "Error: User information not found", Toast.LENGTH_SHORT).show();
             finish();
@@ -35,8 +36,8 @@ public class ResetPasswordActivity extends AppCompatActivity {
 
         etNewPassword = findViewById(R.id.etNewPassword);
         etConfirmPassword = findViewById(R.id.etConfirmPassword);
-        Button btnResetPassword = findViewById(R.id.btnResetPassword);
-        Button btnBack = findViewById(R.id.btnBack);
+        btnResetPassword = findViewById(R.id.btnResetPassword);
+        btnBack = findViewById(R.id.btnBack);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
 

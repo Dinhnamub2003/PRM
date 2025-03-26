@@ -1,4 +1,4 @@
-package com.example.project_prm.Activity.User;
+package com.example.project_prm.Activity.User.Profile;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
@@ -18,6 +18,7 @@ import androidx.activity.result.contract.ActivityResultContracts;
 import androidx.appcompat.app.AppCompatActivity;
 import androidx.lifecycle.ViewModelProvider;
 
+import com.example.project_prm.Activity.User.Shop.ProductListActivity;
 import com.example.project_prm.MainActivity;
 import com.example.project_prm.R;
 import com.example.project_prm.Repository.UserRepository;
@@ -62,7 +63,7 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken(getString(R.string.default_web_client_id))
+                .requestIdToken("625555450237-4dcjn7mim1ceaqt56ir7v84k1tebljs9.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
@@ -294,6 +295,7 @@ public class LoginActivity extends AppCompatActivity {
         String email = etEmail.getText().toString().trim();
         String password = etSignUpPassword.getText().toString().trim();
 
+
         if (TextUtils.isEmpty(username)) {
             etSignUpUsername.setError("Username is required");
             return;
@@ -332,7 +334,7 @@ public class LoginActivity extends AppCompatActivity {
     }
 
     private void navigateToMainScreen(int userId) {
-        Intent intent = new Intent(this, MainActivity.class);
+        Intent intent = new Intent(this, ProductListActivity.class);
         intent.putExtra("USER_ID", userId);
         startActivity(intent);
         finish();

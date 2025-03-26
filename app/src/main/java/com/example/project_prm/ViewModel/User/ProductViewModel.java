@@ -1,4 +1,4 @@
-package com.example.project_prm.ViewModel.Admin;
+package com.example.project_prm.ViewModel.User;
 
 import android.app.Application;
 import androidx.annotation.NonNull;
@@ -14,11 +14,12 @@ import java.util.concurrent.Executors;
 public class ProductViewModel extends AndroidViewModel {
     private ProductRepository repository;
     private LiveData<List<Product>> allProducts;
-
+    private LiveData<List<Product>> allProductsForUser;
     public ProductViewModel(@NonNull Application application) {
         super(application);
         repository = new ProductRepository(application);
         allProducts = repository.getAllProducts();
+        allProductsForUser = repository.getAllProductsForUser();
     }
 
     public LiveData<Product> getProductById(int productId) {
@@ -33,6 +34,9 @@ public class ProductViewModel extends AndroidViewModel {
         return allProducts;
     }
 
+    public LiveData<List<Product>> getAllProductsForUser() {
+        return allProductsForUser;
+    }
     public void insert(Product product) {
         repository.insert(product);
     }

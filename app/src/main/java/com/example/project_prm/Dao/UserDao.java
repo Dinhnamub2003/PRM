@@ -23,7 +23,7 @@ public interface UserDao {
 
     @Query("SELECT username FROM user WHERE id = :userId")
     String getUserNameByIdOrder(int userId);
-    @Query("SELECT COUNT(*) FROM user")
+    @Query("SELECT COUNT(*) FROM user where isDelete = 0")
     int getTotalAccounts();
     @Query("SELECT * FROM user WHERE id = :userId AND isDelete = 0")
     User getUserById(int userId);
@@ -45,7 +45,7 @@ public interface UserDao {
 
     @Query("SELECT * FROM user WHERE isDelete = 0")
   List<User> getAllUsers();
-    @Query("SELECT * FROM user WHERE isDelete = 0")
+    @Query("SELECT * FROM user Order By created_at desc ")
     LiveData< List<User>> getAllUsersAdmin();
     @Query("SELECT * FROM user WHERE id = :userId AND isDelete = 0")
     User getUserByIdSync(int userId);
@@ -58,4 +58,7 @@ public interface UserDao {
 
     @Query("UPDATE user SET password = :newPassword, updated_at = :updatedAt WHERE id = :userId")
     void updatePassword(int userId, String newPassword, String updatedAt);
+
+    @Query("SELECT role_id FROM User WHERE id = :userId")
+    LiveData<Integer> getRoleById(int userId);
 }

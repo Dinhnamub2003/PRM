@@ -1,4 +1,4 @@
-package com.example.project_prm.Adapter.Admin;
+package com.example.project_prm.Adapter.User;
 
 import android.annotation.SuppressLint;
 import android.content.Context;
@@ -8,45 +8,51 @@ import android.graphics.BitmapFactory;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
-import android.widget.AdapterView;
+import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
+
 import androidx.annotation.NonNull;
 import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_prm.Activity.Admin.Product.EditProductActivity;
+import com.example.project_prm.Activity.Admin.Product.DetailProductActivity;
+import com.example.project_prm.Activity.User.Shop.DetailProductShopActivity;
 import com.example.project_prm.Entities.Product;
 import com.example.project_prm.R;
+
 import java.io.File;
 import java.util.ArrayList;
 import java.util.Collections;
 import java.util.Comparator;
 import java.util.List;
-public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductViewHolder> {
+
+public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.ProductViewHolder> {
     private List<Product> productList = new ArrayList<>();
     private List<Product> originalList = new ArrayList<>();
     private String currentQuery = "";
     private boolean isPriceAscending = true;
-
     private int selectedPosition = -1;
+    private OnAddToCartClickListener addToCartListener;
 
+    public interface OnAddToCartClickListener {
+        void onAddToCartClick(Product product);
+    }
 
-    public ProductAdapter(List<Product> productList) {
+    public ProductListAdapter(List<Product> productList, OnAddToCartClickListener addToCartListener) {
 
         if (productList != null) {
             this.productList = new ArrayList<>(productList);
             this.originalList = new ArrayList<>(productList);
-
         }
+        this.addToCartListener = addToCartListener;
     }
-
-
 
     @NonNull
     @Override
     public ProductViewHolder onCreateViewHolder(@NonNull ViewGroup parent, int viewType) {
-        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.item_product, parent, false);
+        View view = LayoutInflater.from(parent.getContext()).inflate(R.layout.product_item, parent, false);
         return new ProductViewHolder(view);
     }
 
@@ -57,7 +63,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         holder.brand.setText(product.getBrand());
         holder.price.setText(String.format("%,.0f VND", product.getSale_price()));
 
-        // Hiển thị ảnh sản phẩm từ đường dẫn
         if (product.getImage() != null && !product.getImage().isEmpty()) {
             File imgFile = new File(product.getImage());
             if (imgFile.exists()) {
@@ -70,18 +75,13 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
             holder.imageViewProduct.setImageResource(R.drawable.img_avatar);
         }
 
-        // Xử lý chọn radio button
-        holder.btnSelect.setChecked(selectedPosition == position);
-        holder.btnSelect.setOnClickListener(v -> {
-            if (selectedPosition == position) {
-                selectedPosition = -1;
-            } else {
-                selectedPosition = position;
-            }
-            notifyDataSetChanged();
+        holder.btnAddToCart.setOnClickListener(v -> addToCartListener.onAddToCartClick(product));
+        holder.itemView.setOnClickListener(v -> {
+            Context context = v.getContext();
+            Intent intent = new Intent(context, DetailProductShopActivity.class);
+            intent.putExtra("PRODUCT_ID", product.getId());
+            context.startActivity(intent);
         });
-
-
     }
 
     @Override
@@ -93,7 +93,6 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
         this.originalList = new ArrayList<>(products);
         applyFilters();
     }
-
 
     public void filterByName(String query) {
         this.currentQuery = query.toLowerCase();
@@ -107,21 +106,16 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
 
     private void applyFilters() {
         List<Product> filteredList = new ArrayList<>();
-
-
         for (Product product : originalList) {
             if (product.getName().toLowerCase().contains(currentQuery)) {
                 filteredList.add(product);
             }
         }
-
-
         if (isPriceAscending) {
             Collections.sort(filteredList, Comparator.comparingDouble(Product::getSale_price));
         } else {
             filteredList.sort((p1, p2) -> Double.compare(p2.getSale_price(), p1.getSale_price()));
         }
-
         productList = filteredList;
         notifyDataSetChanged();
     }
@@ -129,17 +123,20 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
         TextView name, price, brand;
         ImageView imageViewProduct;
-        RadioButton btnSelect;
+
+        ImageButton btnAddToCart;
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
-            imageViewProduct = itemView.findViewById(R.id.imageViewProduct);
-            name = itemView.findViewById(R.id.tvProductName);
-            brand = itemView.findViewById(R.id.tvBrandName);
-            price = itemView.findViewById(R.id.tvProductPrice);
-            btnSelect = itemView.findViewById(R.id.btnSelect);
+            imageViewProduct = itemView.findViewById(R.id.imageView);
+            name = itemView.findViewById(R.id.tvName);
+            brand = itemView.findViewById(R.id.tvBrand);
+            price = itemView.findViewById(R.id.tvPrice);
+
+            btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
         }
     }
+
     public int getSelectedPosition() {
         return selectedPosition;
     }
@@ -149,5 +146,3 @@ public class ProductAdapter extends RecyclerView.Adapter<ProductAdapter.ProductV
     }
 
 }
-
-

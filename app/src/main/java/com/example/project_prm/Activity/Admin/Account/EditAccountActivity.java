@@ -9,10 +9,13 @@ import android.os.Bundle;
 import android.provider.MediaStore;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Log;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Spinner;
 import android.widget.Toast;
@@ -55,7 +58,8 @@ public class EditAccountActivity extends AppCompatActivity {
     private Spinner spinnerRole;
     private UserRepository userRepository;
     private RoleRepository roleRepository;
-    private Button btnSave, btnUpload, btnBack,btnRemoveImage;
+    private Button btnSave, btnUpload, btnBack;
+    private ImageButton btnRemoveImage;
     private ActivityResultLauncher<Intent> imagePicker;
     private ManageAccountViewModel manageAccountViewModel;
     private List<Role> roleList = new ArrayList<>();
@@ -81,6 +85,8 @@ public class EditAccountActivity extends AppCompatActivity {
         btnSave.setOnClickListener(v -> saveUser());
         btnUpload.setOnClickListener(v -> openFileChooser());
         btnBack.setOnClickListener(v -> finish());
+        btnRemoveImage = findViewById(R.id.btnRemoveImage);
+
         imgTogglePassword = findViewById(R.id.imgTogglePassword);
 
         imgTogglePassword.setOnClickListener(new View.OnClickListener() {
@@ -111,7 +117,6 @@ public class EditAccountActivity extends AppCompatActivity {
             imgUserEdit.setImageResource(R.drawable.img_avatar); // Đặt lại ảnh mặc định
             imagePath = ""; // Cập nhật đường dẫn ảnh thành rỗng (hoặc null nếu cần)
             btnRemoveImage.setVisibility(View.GONE); // Ẩn nút "Xóa ảnh"
-            saveUpdatedUserWithoutImage();
         });
 
         manageAccountViewModel = new ViewModelProvider(this).get(ManageAccountViewModel.class);
@@ -120,39 +125,17 @@ public class EditAccountActivity extends AppCompatActivity {
         userRepository = new UserRepository(getApplication());
         roleRepository = new RoleRepository(getApplication());
 
-        int productId = getIntent().getIntExtra("USER_ID", -1);
-        if (productId != -1) {
-            loadUserData(productId);
+        int userId = getIntent().getIntExtra("ID", -1);
+        Log.d("EditAccountActivity", "Received User ID: " + userId);
+        if (userId != -1) {
+            loadUserData(userId);
         }else{
             Toast.makeText(this, "PLease choose product to edit!", Toast.LENGTH_SHORT).show();
         }
 
         setupImagePicker();
     }
-    private void saveUpdatedUserWithoutImage() {
-        if (existingUser != null) {
-            String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 
-            User updatedUser = new User(
-                    existingUser.getId(),
-                    existingUser.getUsername(),
-                    existingUser.getPassword(),
-                    existingUser.getPhone(),
-                    existingUser.getGmail(),
-                    existingUser.getAddress(),
-                    "", // Đặt lại imagePath thành rỗng để xóa ảnh trong database
-                    existingUser.getRole_id(),
-                    existingUser.getCreated_at(),
-                    currentTime,
-                    "",
-                    0
-            );
-
-            manageAccountViewModel.update(updatedUser);
-
-            Toast.makeText(this, "Ảnh đã được xóa!", Toast.LENGTH_SHORT).show();
-        }
-    }
 
 
     private void loadUserData(int userId) {
@@ -258,6 +241,25 @@ public class EditAccountActivity extends AppCompatActivity {
 
         if (username.isEmpty() || password.isEmpty() || phone.isEmpty() || mail.isEmpty() || address.isEmpty()) {
             Toast.makeText(this, "Enter require information", Toast.LENGTH_SHORT).show();
+            return;
+        }
+        if (!Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
+            etMail.setError("Please enter a valid email address");
+            etMail.requestFocus();
+            return;
+        }
+
+        // Kiểm tra định dạng số điện thoại (9-15 số)
+        if (!Patterns.PHONE.matcher(phone).matches() || !phone.matches("^[0-9]{9,15}$")) {
+            etPhone.setError("Please enter a valid phone number (9-15 digits)");
+            etPhone.requestFocus();
+            return;
+        }
+
+        // Kiểm tra độ dài mật khẩu
+        if (password.length() < 6) {
+            etPassword.setError("Password must be at least 6 characters");
+            etPassword.requestFocus();
             return;
         }
 

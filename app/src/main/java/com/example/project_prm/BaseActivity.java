@@ -8,6 +8,7 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.widget.TextView;
+import android.widget.Toast;
 
 import androidx.annotation.NonNull;
 import androidx.appcompat.app.ActionBarDrawerToggle;
@@ -16,50 +17,89 @@ import androidx.appcompat.app.AppCompatActivity;
 import androidx.appcompat.widget.Toolbar;
 import androidx.core.view.GravityCompat;
 import androidx.drawerlayout.widget.DrawerLayout;
+import androidx.lifecycle.ViewModelProvider;
 
 import com.example.project_prm.Activity.Admin.Account.ManageAccountActivity;
 import com.example.project_prm.Activity.Admin.Order.ManageOrderActivity;
 import com.example.project_prm.Activity.Admin.Product.ManageProductActivity;
 import com.example.project_prm.Activity.Admin.Statistic.StatisticActivity;
-import com.example.project_prm.Activity.User.LoginActivity;
-import com.example.project_prm.Activity.User.ProfileActivity;
+import com.example.project_prm.Activity.User.Cart.CartActivity;
+import com.example.project_prm.Activity.User.LiveStream.LiveActivity;
+import com.example.project_prm.Activity.User.LiveStream.LiveStream;
+import com.example.project_prm.Activity.User.Profile.LoginActivity;
+import com.example.project_prm.Activity.User.Profile.ProfileActivity;
+import com.example.project_prm.Activity.User.Shop.OrderHistoryActivity;
+import com.example.project_prm.Activity.User.Shop.ProductListActivity;
+import com.example.project_prm.ViewModel.User.UserViewModel;
+import com.google.android.gms.auth.api.signin.GoogleSignIn;
+import com.google.android.gms.auth.api.signin.GoogleSignInClient;
+import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
+import com.google.firebase.auth.FirebaseAuth;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawer;
     private ActionBarDrawerToggle toggle;
-    private static final String KEY_USERNAME = "username";
+    private UserViewModel  userViewModel;
+    protected BottomNavigationView bottomNavigationView;
+    private FirebaseAuth mAuth;
+    private GoogleSignInClient mGoogleSignInClient;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_base);
+        // Khởi tạo Firebase Auth
+        mAuth = FirebaseAuth.getInstance();
 
-        // Ánh xạ Toolbar
+        // Khởi tạo GoogleSignInClient
+        GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
+                .requestEmail()
+                .build();
+        mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
         Toolbar toolbar = findViewById(R.id.toolbar);
-        setSupportActionBar(toolbar); // Đặt Toolbar làm ActionBar
+        setSupportActionBar(toolbar);
 
-        // Ánh xạ DrawerLayout
         drawer = findViewById(R.id.drawer_layout);
-
-        // Thêm icon menu vào Toolbar
         toggle = new ActionBarDrawerToggle(
                 this, drawer, toolbar,
                 R.string.navigation_drawer_open,
                 R.string.navigation_drawer_close);
         drawer.addDrawerListener(toggle);
-        toggle.syncState(); // Đồng bộ trạng thái với Drawer
+        toggle.syncState();
 
-        // Ánh xạ NavigationView
         NavigationView navigationView = findViewById(R.id.nav_view);
         navigationView.setNavigationItemSelectedListener(this);
+
+        // Khởi tạo ViewModel
+        userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
+        updateMenuBasedOnRole(navigationView);
 
         View headerView = navigationView.getHeaderView(0);
         TextView tvWelcome = headerView.findViewById(R.id.tvWelcome);
         tvWelcome.setText("Welcome");
 
+        // Bottom Navigation
+        bottomNavigationView = findViewById(R.id.bottomNavigationView);
+        bottomNavigationView.setOnItemSelectedListener(item -> {
+            Intent intent = null;
+            if (item.getItemId() == R.id.nav_home) {
+                intent = new Intent(this, ProductListActivity.class);
+            } else if (item.getItemId() == R.id.nav_cart) {
+                intent = new Intent(this, CartActivity.class);
+            } else if (item.getItemId() == R.id.nav_profile) {
+                intent = new Intent(this, ProfileActivity.class);
+            }
 
-        updateMenuBasedOnRole(navigationView);
+            if (intent != null) {
+                startActivity(intent);
+                overridePendingTransition(0, 0);
+                return true;
+            }
+            return false;
+        });
     }
+
 
     @Override
     public boolean onOptionsItemSelected(@NonNull MenuItem item) {
@@ -90,6 +130,12 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 intent.putExtra("USER_ID", userId);
                 startActivity(intent);
             }
+        } else if (id == R.id.nav_order_history) {
+                Intent intent = new Intent(this, OrderHistoryActivity.class);
+                startActivity(intent);
+        } else if (id == R.id.nav_live) {
+            Intent intent = new Intent(this, LiveStream.class);
+            startActivity(intent);
         }else{
             showLogoutConfirmationDialog();
         }
@@ -98,16 +144,55 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         return true;
     }
     private void logout() {
-        SharedPreferences sharedPreferences = getSharedPreferences("MY_APP_PREFS", MODE_PRIVATE);
+        // Đăng xuất khỏi Firebase Authentication
+        if (mAuth != null) {
+            mAuth.signOut();
+        }
+
+        // Đăng xuất khỏi GoogleSignInClient
+        if (mGoogleSignInClient != null) {
+            mGoogleSignInClient.signOut().addOnCompleteListener(this, task -> {
+                // Sau khi đăng xuất hoàn tất, chuyển về màn hình đăng nhập
+                Intent intent = new Intent(BaseActivity.this, LoginActivity.class);
+                intent.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+                startActivity(intent);
+                finish();
+            });
+
+            // Xóa tài khoản Google để khi đăng nhập lại không tự động chọn tài khoản trước đó
+            mGoogleSignInClient.revokeAccess().addOnCompleteListener(this, task -> {
+                Toast.makeText(this, "Logged out successfully", Toast.LENGTH_SHORT).show();
+            });
+        }
+
+        // Xóa thông tin đăng nhập đã lưu
+        clearSavedLoginInfo();
+    }
+
+    private void clearSavedLoginInfo() {
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
         SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean("IS_LOGGED_IN", false);
-        editor.putInt("USER_ID", -1);
+        editor.clear();
         editor.apply();
 
         Intent intent = new Intent(this, LoginActivity.class);
         intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
         startActivity(intent);
+        finish();
     }
+//    private void logout() {
+//        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+//        SharedPreferences.Editor editor = sharedPreferences.edit();
+//        editor.clear(); // Xóa toàn bộ thông tin đăng nhập
+//        editor.apply();
+//
+//        // Chuyển hướng về màn hình đăng nhập
+//        Intent intent = new Intent(this, LoginActivity.class);
+//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
+//        startActivity(intent);
+//        finish();
+//    }
+
     private void showLogoutConfirmationDialog() {
         new AlertDialog.Builder(this)
                 .setMessage("Are you sure you want to logout?")
@@ -117,17 +202,31 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     }
     private void updateMenuBasedOnRole(NavigationView navigationView) {
         SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-        String role = sharedPreferences.getString("role", "User"); // Mặc định là User
+        int userId = sharedPreferences.getInt("user_id", -1);
 
-        // Lấy Menu từ NavigationView
-        Menu menu = navigationView.getMenu();
-
-        if (role.equals("User")) {
-            // Ẩn các mục không dành cho User
-            menu.findItem(R.id.nav_statistic).setVisible(false);
-            menu.findItem(R.id.nav_product).setVisible(false);
-            menu.findItem(R.id.nav_account).setVisible(false);
-            menu.findItem(R.id.nav_order).setVisible(false);
+        if (userId == -1) {
+            return; // Không làm gì nếu userId không hợp lệ
         }
+
+        userViewModel.getRoleById(userId).observe(this, roleId -> {
+            if (roleId == null) return; // Kiểm tra nếu role null
+
+
+            Menu menu = navigationView.getMenu();
+
+            if (roleId == 2) { // Nếu là User
+                menu.findItem(R.id.nav_statistic).setVisible(false);
+                menu.findItem(R.id.nav_product).setVisible(false);
+                menu.findItem(R.id.nav_account).setVisible(false);
+                menu.findItem(R.id.nav_order).setVisible(false);
+            } else { // Nếu là Admin (role_id == 1)
+                menu.findItem(R.id.nav_statistic).setVisible(true);
+                menu.findItem(R.id.nav_product).setVisible(true);
+                menu.findItem(R.id.nav_account).setVisible(true);
+                menu.findItem(R.id.nav_order).setVisible(true);
+            }
+        });
     }
+
+
 }

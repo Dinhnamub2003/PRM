@@ -6,8 +6,10 @@ import android.graphics.Bitmap;
 import android.net.Uri;
 import android.os.Bundle;
 import android.provider.MediaStore;
+import android.text.TextUtils;
 import android.text.method.HideReturnsTransformationMethod;
 import android.text.method.PasswordTransformationMethod;
+import android.util.Patterns;
 import android.view.View;
 import android.widget.ArrayAdapter;
 import android.widget.Button;
@@ -154,6 +156,24 @@ public class AddAccountActivity extends AppCompatActivity {
 
         if (username.isEmpty() || phone.isEmpty() || mail.isEmpty() || address.isEmpty() || password.isEmpty() ) {
             Toast.makeText(this, "Please enter require field!", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        if (!android.util.Patterns.EMAIL_ADDRESS.matcher(mail).matches()) {
+            etMail.setError("Please enter a valid email address");
+            etMail.requestFocus();
+            return;
+        }
+        if (!Patterns.PHONE.matcher(phone).matches() || !phone.matches("^[0-9]{9,15}$")) {
+            etPhone.setError("Please enter a valid phone number (9-15 digits)");
+            etPhone.requestFocus();
+            return;
+        }
+
+
+        if (password.length() < 6) {
+            etPassword.setError("Password must be at least 6 characters");
+            etPassword.requestFocus();
             return;
         }
 

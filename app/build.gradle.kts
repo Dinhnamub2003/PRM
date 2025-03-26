@@ -1,5 +1,6 @@
 plugins {
     alias(libs.plugins.android.application)
+    id("com.google.gms.google-services")
 }
 
 android {
@@ -29,9 +30,17 @@ android {
         sourceCompatibility = JavaVersion.VERSION_11
         targetCompatibility = JavaVersion.VERSION_11
     }
+    buildFeatures {
+        dataBinding = true
+    }
 }
 
 dependencies {
+    // Fire Base
+    implementation(platform("com.google.firebase:firebase-bom:33.11.0"))
+    implementation("com.google.firebase:firebase-analytics")
+    implementation("com.google.firebase:firebase-auth")
+    // Base
     implementation(libs.appcompat)
     implementation(libs.material)
     implementation(libs.activity)
@@ -64,4 +73,8 @@ dependencies {
 
     // Live
     implementation("com.github.ZEGOCLOUD:zego_uikit_prebuilt_live_streaming_android:+")
+
+   //chat
+    implementation("com.github.ZEGOCLOUD:zego_inapp_chat_uikit_android:+")
+    implementation ("com.google.code.gson:gson:2.8.8")
 }

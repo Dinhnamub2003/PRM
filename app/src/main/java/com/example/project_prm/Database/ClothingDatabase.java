@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {
         User.class, Role.class, Category.class, Product.class,
         Order.class, OrderDetail.class, Cart.class, Rating.class
-}, version = 2, exportSchema = false)
+}, version = 4, exportSchema = false)
 public abstract class ClothingDatabase extends RoomDatabase {
 
     private static volatile ClothingDatabase INSTANCE;
@@ -41,17 +41,15 @@ public abstract class ClothingDatabase extends RoomDatabase {
             synchronized (ClothingDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    ClothingDatabase.class, "DBClothing")
-                            .fallbackToDestructiveMigration()
-                            .createFromAsset("DBClothing.db")
-
-                           // .addCallback(roomDatabaseCallback) // Thêm callback để insert dữ liệu mẫu
+                                    ClothingDatabase.class, "DataBase")
+                            .createFromAsset("DB.db")
                             .build();
                 }
             }
         }
         return INSTANCE;
     }
+
 
 //    private static final RoomDatabase.Callback roomDatabaseCallback = new RoomDatabase.Callback() {
 //        @Override

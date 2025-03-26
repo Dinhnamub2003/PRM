@@ -7,24 +7,23 @@ import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.os.Handler;
 import android.os.Looper;
-import android.view.View;
-import android.widget.ImageButton;
-import android.widget.TextView;
 
-import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AlertDialog;
-import androidx.appcompat.app.AppCompatActivity;
-import androidx.appcompat.widget.Toolbar;
-import androidx.core.view.GravityCompat;
+import androidx.recyclerview.widget.LinearLayoutManager;
+import androidx.recyclerview.widget.RecyclerView;
 
-import com.example.project_prm.Activity.User.LoginActivity;
-import com.example.project_prm.Activity.User.PasswordChangeActivity;
-import com.example.project_prm.Activity.User.ProfileActivity;
+import com.example.project_prm.Activity.User.Cart.CartActivity;
+import com.example.project_prm.Activity.User.Chat.ConstantKey;
+import com.example.project_prm.Activity.User.Profile.LoginActivity;
+import com.example.project_prm.Activity.User.Shop.ProductListActivity;
+
 import com.example.project_prm.Database.ClothingDatabase;
-import com.example.project_prm.Entities.User;
-import com.google.android.material.navigation.NavigationView;
+import com.example.project_prm.Database.DatabaseHelper;
+import com.example.project_prm.Entities.Product;
+import com.google.android.material.bottomnavigation.BottomNavigationView;
+import com.zegocloud.zimkit.services.ZIMKit;
 
-import java.util.concurrent.ExecutorService;
+import java.util.List;
 
 
 public class MainActivity extends BaseActivity {
@@ -44,7 +43,7 @@ public class MainActivity extends BaseActivity {
             redirectToLogin();
             return;
         }
-
+        DatabaseHelper.copyDatabaseFromAssets(this);
 //        EdgeToEdge.enable(this);
         getLayoutInflater().inflate(R.layout.activity_main, findViewById(R.id.content_frame));
 
@@ -54,34 +53,18 @@ public class MainActivity extends BaseActivity {
         } else {
             userId = getUserIdFromPreferences();
         }
-
-
-    }
-
-    private void showLogoutConfirmationDialog() {
-        AlertDialog.Builder builder = new AlertDialog.Builder(this);
-        builder.setMessage("Are you sure you want to logout?")
-                .setPositiveButton("Yes", (dialog, id) -> logout())
-                .setNegativeButton("No", (dialog, id) -> dialog.dismiss());
-        AlertDialog dialog = builder.create();
-        dialog.show();
-    }
-
-    private void logout() {
-        SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
-        SharedPreferences.Editor editor = sharedPreferences.edit();
-        editor.putBoolean(KEY_REMEMBER, false);
-        editor.putInt(KEY_USER_ID, -1);
-        editor.apply();
-
-        navigateToLoginScreen();
-    }
-
-    private void navigateToLoginScreen() {
-        Intent intent = new Intent(this, LoginActivity.class);
-        startActivity(intent);
+        initZegocloud();
+        startActivity(new Intent(this, LoginActivity.class));
         finish();
+
     }
+    public void initZegocloud() {
+        ZIMKit.initWith(this.getApplication(), ConstantKey.appID, ConstantKey.appSign);
+        ZIMKit.initNotifications();
+    }
+
+
+
 
     private boolean isUserLoggedIn() {
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
@@ -106,5 +89,6 @@ public class MainActivity extends BaseActivity {
         SharedPreferences sharedPreferences = getSharedPreferences(PREF_NAME, MODE_PRIVATE);
         return sharedPreferences.getInt(KEY_USER_ID, -1);
     }
+
 }
 

@@ -29,6 +29,15 @@ public class Cart {
         this.created_at = created_at;
     }
 
+
+    public Cart( int user_id, int product_id, int quantity, String created_at) {
+
+        this.user_id = user_id;
+        this.product_id = product_id;
+        this.quantity = quantity;
+        this.created_at = created_at;
+    }
+
     public int getId() {
         return id;
     }

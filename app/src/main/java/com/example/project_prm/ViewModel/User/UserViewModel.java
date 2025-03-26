@@ -90,5 +90,8 @@ public class UserViewModel extends AndroidViewModel {
     public LiveData<LoginResult> getGoogleLoginResult() {
         return googleLoginResult;
     }
+    public LiveData<Integer> getRoleById(int userId) {
+        return userRepository.getRoleById(userId);
+    }
 }
 

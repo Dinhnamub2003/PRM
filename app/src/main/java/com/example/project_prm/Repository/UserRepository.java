@@ -149,12 +149,14 @@ public class UserRepository {
         executorService.execute(() -> {
             try {
                 User user = userDao.login(username, password);
+
                 if (user != null) {
                     if (user.getIsDelete() == 1) {
                         onLoginFailure("This account has been deactivated");
                     } else {
                         onLoginSuccess(user);
                     }
+
                 } else {
                     onLoginFailure("Invalid username or password");
                 }
@@ -359,6 +361,9 @@ public class UserRepository {
 
     public void delete(User user) {
         executorService.execute(() -> userDao.delete(user));
+    }
+    public LiveData<Integer> getRoleById(int userId) {
+        return userDao.getRoleById(userId);
     }
 
 }

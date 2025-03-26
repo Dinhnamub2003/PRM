@@ -131,15 +131,35 @@ public class AddProductActivity extends AppCompatActivity {
             return;
         }
 
+
         int selectedPosition = spinnerCategory.getSelectedItemPosition();
         if (selectedPosition >= 0 && selectedPosition < categoryList.size()) {
             selectedCategoryId = categoryList.get(selectedPosition).getId();
         }
 
-        int stock = Integer.parseInt(stockStr);
-        double salePrice = Double.parseDouble(salePriceStr);
+        int stock;
+        double salePrice, dealerPrice = 0;
+
+        try {
+            stock = Integer.parseInt(stockStr);
+            salePrice = Double.parseDouble(salePriceStr);
+
+            if (!dealerPriceStr.isEmpty()) {
+                dealerPrice = Double.parseDouble(dealerPriceStr);
+            }
+        } catch (NumberFormatException e) {
+            Toast.makeText(this, "Enter right format", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
+        // Kiểm tra giá trị hợp lệ
+        if (stock < 0 || salePrice < 0 ||  dealerPrice < 0) {
+            Toast.makeText(this, "Price mt greater than 0", Toast.LENGTH_SHORT).show();
+            return;
+        }
+
         double discount = discountStr.isEmpty() ? 0 : Double.parseDouble(discountStr);
-        double dealerPrice = dealerPriceStr.isEmpty() ? 0 : Double.parseDouble(dealerPriceStr);
+
 
         String currentTime = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date());
 

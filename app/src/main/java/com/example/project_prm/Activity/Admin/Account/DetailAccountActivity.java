@@ -38,8 +38,8 @@ public class DetailAccountActivity extends AppCompatActivity {
         tvUpdate = findViewById(R.id.tvUpdate);
         manageAccountViewModel = new ViewModelProvider(this).get(ManageAccountViewModel.class);
         Intent intent = getIntent();
-        if(intent != null && intent.hasExtra("USER_ID")){
-            int userID = intent.getIntExtra("USER_ID",-1);
+        if(intent != null && intent.hasExtra("ID")){
+            int userID = intent.getIntExtra("ID",-1);
             manageAccountViewModel.getUserById(userID).observe(this, user -> {
                 if(user!= null){
                      tvUserName.setText("UserName: "+ user.getUsername());

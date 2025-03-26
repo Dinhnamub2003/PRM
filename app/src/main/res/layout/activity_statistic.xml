@@ -15,16 +15,18 @@
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:text="Statistics Overview"
-        android:textSize="20sp"
+        android:textSize="22sp"
         android:textStyle="bold"
         android:textColor="@color/black"
         app:layout_constraintTop_toTopOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        android:paddingBottom="10dp"/>
+        android:paddingBottom="16dp"/>
 
     <!-- Biểu đồ cột trong CardView -->
+    <!-- Biểu đồ cột trong CardView -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardBarChart"
         android:layout_width="0dp"
         android:layout_height="320dp"
         app:cardCornerRadius="12dp"
@@ -35,6 +37,16 @@
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="10dp">
 
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="8dp"/>
+
         <com.github.mikephil.charting.charts.BarChart
             android:id="@+id/barChart"
             android:layout_width="match_parent"
@@ -43,22 +55,32 @@
 
     <!-- Biểu đồ tròn trong CardView -->
     <androidx.cardview.widget.CardView
+        android:id="@+id/cardPieChart"
         android:layout_width="0dp"
         android:layout_height="320dp"
         app:cardCornerRadius="12dp"
         app:cardElevation="6dp"
         android:background="@android:color/white"
-        app:layout_constraintTop_toBottomOf="@id/barChart"
+        app:layout_constraintTop_toBottomOf="@id/cardBarChart"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:padding="10dp"
-        tools:ignore="NotSibling">
+        android:layout_marginTop="16dp"> <!-- Tạo khoảng cách giữa 2 biểu đồ -->
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            android:textColor="@color/black"
+            android:gravity="center"
+            android:layout_gravity="center"
+            android:paddingBottom="8dp"/>
 
         <com.github.mikephil.charting.charts.PieChart
             android:id="@+id/pieChart"
             android:layout_width="match_parent"
             android:layout_height="match_parent"/>
     </androidx.cardview.widget.CardView>
-
 
 </androidx.constraintlayout.widget.ConstraintLayout>

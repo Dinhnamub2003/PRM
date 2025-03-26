@@ -1,6 +1,7 @@
 package com.example.project_prm.Activity.Admin.Account;
 
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.Editable;
 import android.text.TextWatcher;
@@ -35,11 +36,14 @@ public class ManageAccountActivity extends BaseActivity {
     private RecyclerView recyclerView;
     private ManageAccountAdapter manageAccountAdapter;
     private ManageAccountViewModel manageAccountViewModel;
+    private int currentUserId ;
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         getLayoutInflater().inflate(R.layout.activity_manage_account, findViewById(R.id.content_frame));
-        manageAccountAdapter = new ManageAccountAdapter(new ArrayList<>());
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        currentUserId = sharedPreferences.getInt("user_id", -1);
+        manageAccountAdapter = new ManageAccountAdapter(new ArrayList<>(), currentUserId);
         recyclerView = findViewById(R.id.recyclerViewAccount);
         recyclerView.setLayoutManager(new LinearLayoutManager(this));
 
@@ -48,7 +52,7 @@ public class ManageAccountActivity extends BaseActivity {
             if (selectedPosition != -1) {
                 User selectedUser= manageAccountAdapter.getUserAt(selectedPosition);
                 Intent intent = new Intent(ManageAccountActivity.this, EditAccountActivity.class);
-                intent.putExtra("USER_ID", selectedUser.getId());
+                intent.putExtra("ID", selectedUser.getId());
                 startActivity(intent);
             }
         });

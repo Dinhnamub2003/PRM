@@ -9,6 +9,7 @@ pluginManagement {
         }
         mavenCentral()
         gradlePluginPortal()
+        maven { url = uri("https://www.jitpack.io") }
     }
 }
 dependencyResolutionManagement {
@@ -18,6 +19,8 @@ dependencyResolutionManagement {
         mavenCentral()
         maven { url = uri("https://storage.zego.im/maven") } // Sửa lại dấu 'url' thành 'uri'
         maven { url = uri("https://www.jitpack.io") } // Sửa lại dấu 'url' thành 'uri'
+        /// chat
+
     }
 }
 
