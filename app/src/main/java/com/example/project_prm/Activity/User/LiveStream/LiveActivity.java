@@ -40,7 +40,18 @@ public class LiveActivity extends AppCompatActivity {
 // Hiển thị Live ID trên TextView
         txtLiveId.setText(liveID);
 
-        addFragment();
+        new Thread(new Runnable() {
+            @Override
+            public void run() {
+                runOnUiThread(new Runnable() {
+                    @Override
+                    public void run() {
+                        addFragment();
+                    }
+                });
+            }
+        }).start();
+
 
         btnShare.setOnClickListener(new View.OnClickListener() {
             @Override

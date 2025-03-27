@@ -82,6 +82,8 @@ public class OrderHistoryActivity extends BaseActivity {
                 selectedStatus = "Completed";
             } else if (itemId == R.id.filter_by_cancelled) {
                 selectedStatus = "Cancelled";
+            } else if (itemId == R.id.filter_by_payment) {
+                selectedStatus = "Payment";
             } else {
                 selectedStatus = "All";
             }

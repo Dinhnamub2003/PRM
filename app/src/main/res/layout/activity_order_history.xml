@@ -31,6 +31,15 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent">
 
+                <TextView
+                    android:id="@+id/tvText"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="Filter by status"
+                    android:textSize="18sp"
+                    android:textColor="@color/color_ff175ce6"
+                    android:layout_marginStart="113dp"
+                    android:padding="8dp"/>
         <ImageView
             android:id="@+id/ivFilterOrder"
             android:layout_width="40dp"

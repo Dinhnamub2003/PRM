@@ -3,17 +3,16 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
     <uses-feature android:name="android.permission.CAMERA" />
 
-
     <uses-permission android:name="android.permission.VIBRATE" />
     <uses-permission android:name="android.permission.ACCESS_NOTIFICATION_POLICY" /> <!-- Yêu cầu quyền POST_NOTIFICATIONS (Android 13 trở lên) -->
     <uses-permission android:name="android.permission.POST_NOTIFICATIONS" />
-    <uses-permission android:name="android.permission.INTERNET" />
 
     <application
         android:allowBackup="true"
@@ -26,6 +25,31 @@
         android:theme="@style/Theme.Project_PRM"
         tools:targetApi="35">
         <activity
+            android:name=".Activity.User.ZaloPay.PaymentNotification"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.User.ZaloPay.OrderPayment"
+            android:exported="true"
+
+            android:label="Merchant Demo"
+            android:launchMode="singleTask">
+            <intent-filter>
+                <action android:name="android.intent.action.VIEW" />
+                <category android:name="android.intent.category.DEFAULT" />
+                <category android:name="android.intent.category.BROWSABLE" />
+                <data
+                    android:host="app"
+                    android:scheme="demozpdk" />
+            </intent-filter>
+        </activity>
+        <activity
+            android:name=".Activity.User.ChatBot.ChatbotActivity"
+            android:exported="true" />
+        <activity
+            android:name=".Activity.User.VirtualRoom.VirtualRoomActivity"
+            android:exported="true" />
+
+        <activity
             android:name=".Activity.User.Chat.LoginActivity"
             android:exported="true" />
         <activity
@@ -34,7 +58,6 @@
         <activity
             android:name=".Activity.User.Shop.OrderHistoryActivity"
             android:exported="true" />
-
         <activity
             android:name=".Activity.User.Shop.DetailProductShopActivity"
             android:exported="false" />

@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.view.ViewStub;
 import android.widget.Button;
@@ -63,9 +64,10 @@ public class LoginActivity extends AppCompatActivity {
 
         mAuth = FirebaseAuth.getInstance();
         GoogleSignInOptions gso = new GoogleSignInOptions.Builder(GoogleSignInOptions.DEFAULT_SIGN_IN)
-                .requestIdToken("625555450237-4dcjn7mim1ceaqt56ir7v84k1tebljs9.apps.googleusercontent.com")
+                .requestIdToken("365666487550-o6aioaki9br6t1lr24aeuro406iq67en.apps.googleusercontent.com")
                 .requestEmail()
                 .build();
+
         mGoogleSignInClient = GoogleSignIn.getClient(this, gso);
 
         userViewModel = new ViewModelProvider(this).get(UserViewModel.class);
@@ -203,18 +205,21 @@ public class LoginActivity extends AppCompatActivity {
     private void handleSignInResult(Task<GoogleSignInAccount> completedTask) {
         try {
             GoogleSignInAccount account = completedTask.getResult(ApiException.class);
-            firebaseAuthWithGoogle(account.getIdToken());
+            if (account != null) {
+                firebaseAuthWithGoogle(account.getIdToken());
+            } else {
+                Toast.makeText(this, "Account is null", Toast.LENGTH_SHORT).show();
+            }
         } catch (ApiException e) {
+            Log.e("Register", "Google Sign-In failed: " + e.getMessage(), e);
             Toast.makeText(this, "Google Sign-In failed: " + e.getMessage(), Toast.LENGTH_SHORT).show();
-            userViewModel.getGoogleLoginResult().observe(this, googleLoginResult -> {
-                if (googleLoginResult != null && !googleLoginResult.isSuccess()) {
-                    Toast.makeText(this, "Login failed: " + googleLoginResult.getMessage(), Toast.LENGTH_SHORT).show();
-                }
-            });
         }
     }
 
+
     private void firebaseAuthWithGoogle(String idToken) {
+        Log.d("GoogleSignIn", "Authenticating with Firebase using Google token");
+
         AuthCredential credential = GoogleAuthProvider.getCredential(idToken, null);
         mAuth.signInWithCredential(credential)
                 .addOnCompleteListener(this, task -> {
@@ -223,14 +228,15 @@ public class LoginActivity extends AppCompatActivity {
                         if (account != null) {
                             String username = account.getDisplayName();
                             String email = account.getEmail();
+                            Log.d("GoogleSignIn", "Firebase Authentication successful: " + email);
                             userViewModel.googleLogin(username, email);
                         }
                     } else {
-                        Toast.makeText(this, "Firebase Authentication Failed: " + Objects.requireNonNull(task.getException()).getMessage(),
-                                Toast.LENGTH_SHORT).show();
+                        Log.e("GoogleSignIn", "Firebase Authentication failed: " + Objects.requireNonNull(task.getException()).getMessage());
                     }
                 });
     }
+
 
     private void observeAuthResults() {
         userViewModel.getLoginResult().observe(this, loginResult -> {
@@ -286,6 +292,7 @@ public class LoginActivity extends AppCompatActivity {
             etPassword.setError("Password is required");
             return;
         }
+
 
         userViewModel.login(username, password);
     }

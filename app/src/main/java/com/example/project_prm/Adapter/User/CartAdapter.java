@@ -4,6 +4,7 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.Button;
+import android.widget.CheckBox;
 import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -18,26 +19,36 @@ import com.example.project_prm.R;
 import com.example.project_prm.ViewModel.User.CartViewModel;
 
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder> {
-    private List<CartWithProduct> cartList = new ArrayList<>();
+    public List<CartWithProduct> cartList = new ArrayList<>();
     private OnCartItemClickListener listener;
     private CartViewModel cartViewModel;
     private OnQuantityChangeListener quantityChangeListener;
-
+    private OnItemSelectedListener onItemSelectedListener;
+    private Set<CartWithProduct> selectedItems = new HashSet<>();
+    public interface OnItemSelectedListener {
+        void onSelectionChanged(Set<CartWithProduct> selectedItems);
+    }
     public interface OnCartItemClickListener {
         void onDeleteClick(CartWithProduct cart);
+    }
+    public Set<CartWithProduct> getSelectedItems() {
+        return selectedItems;
     }
 
     public interface OnQuantityChangeListener {
         void onQuantityChanged();
     }
 
-    public CartAdapter(OnCartItemClickListener listener, CartViewModel cartViewModel, OnQuantityChangeListener quantityChangeListener) {
+    public CartAdapter(OnCartItemClickListener listener, CartViewModel cartViewModel, OnQuantityChangeListener quantityChangeListener, OnItemSelectedListener onItemSelectedListener) {
         this.listener = listener;
         this.cartViewModel = cartViewModel;
         this.quantityChangeListener = quantityChangeListener;
+        this.onItemSelectedListener = onItemSelectedListener;
     }
 
     @NonNull
@@ -66,6 +77,7 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
     class CartViewHolder extends RecyclerView.ViewHolder {
         TextView txtProductName, txtProductQuantity, txtProductPrice;
         ImageView imgDelete;
+        CheckBox checkboxSelect;
         ImageButton  btnIncrease, btnDecrease;
 
         public CartViewHolder(@NonNull View itemView) {
@@ -76,13 +88,14 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             imgDelete = itemView.findViewById(R.id.imgDelete);
             btnDecrease = itemView.findViewById(R.id.btnDecrease);
             btnIncrease = itemView.findViewById(R.id.btnIncrease);
+            checkboxSelect = itemView.findViewById(R.id.checkboxSelect);
         }
 
         void bind(CartWithProduct cartWithProduct) {
             Cart cart = cartWithProduct.getCart();
             txtProductName.setText(cartWithProduct.getProductName());
             txtProductQuantity.setText("Quantity: " + cart.getQuantity());
-            txtProductPrice.setText(String.format("Price: %,.0f VND", cart.getQuantity() * cartWithProduct.getProductPrice()));
+            txtProductPrice.setText(String.format("Price: %,.0f VND", cart.getPrice()));
 
             btnIncrease.setOnClickListener(v -> {
                 cart.setQuantity(cart.getQuantity() + 1);
@@ -122,7 +135,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
                         .setNegativeButton("No", (dialog, which) -> dialog.dismiss())
                         .show();
             });
+            checkboxSelect.setOnCheckedChangeListener(null);
+            checkboxSelect.setChecked(selectedItems.contains(cartWithProduct));
+            checkboxSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
+                if (isChecked) {
+                    selectedItems.add(cartWithProduct);
+                } else {
+                    selectedItems.remove(cartWithProduct);
+                }
+                if (onItemSelectedListener != null) {
+                    onItemSelectedListener.onSelectionChanged(selectedItems);
+                }
+            });
+
 
         }
     }
+
 }

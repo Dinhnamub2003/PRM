@@ -3,21 +3,25 @@ package com.example.project_prm.Entities;
 import androidx.room.Embedded;
 import androidx.room.Ignore;
 
-public class CartWithProduct {
+import java.io.Serializable;
+
+public class CartWithProduct implements Serializable {
     @Embedded
     private Cart cart;
 
     private String productName;
     private double productPrice;
+    private int productStock;
 
     public CartWithProduct() {
     }
 
     @Ignore
-    public CartWithProduct(Cart cart, String productName, double productPrice) {
+    public CartWithProduct(Cart cart, String productName, double productPrice, int productStock) {
         this.cart = cart;
         this.productName = productName;
         this.productPrice = productPrice;
+        this.productStock = productStock; // Gán giá trị stock
     }
 
     public Cart getCart() {
@@ -43,4 +47,12 @@ public class CartWithProduct {
     public void setProductPrice(double productPrice) {
         this.productPrice = productPrice;
     }
+    public int getProductStock() {
+        return productStock;
+    }
+
+    public void setProductStock(int productStock) {
+        this.productStock = productStock;
+    }
+
 }

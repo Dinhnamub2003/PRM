@@ -25,6 +25,7 @@ import com.example.project_prm.Repository.OrderRepository;
 import com.example.project_prm.ViewModel.Admin.ManageOrderViewModel;
 
 import java.util.ArrayList;
+import java.util.List;
 
 public class ManageOrderActivity extends BaseActivity {
     private RecyclerView recyclerView;
@@ -78,6 +79,8 @@ public class ManageOrderActivity extends BaseActivity {
                 selectedStatus = "Completed";
             } else if (itemId == R.id.filter_by_cancelled) {
                 selectedStatus = "Cancelled";
+            } else if (itemId == R.id.filter_by_payment) {
+                selectedStatus = "Payment";
             } else {
                 selectedStatus = "All";
             }
@@ -90,35 +93,30 @@ public class ManageOrderActivity extends BaseActivity {
     }
 
     private void confirmUpdateOrderStatus(String newStatus) {
-        int selectedPosition = manageOrderAdapter.getSelectedPosition();
-        if (selectedPosition == -1) {
-            Toast.makeText(this, "Please select an order", Toast.LENGTH_SHORT).show();
-            return;
-        }
-
-        Order selectedOrder = manageOrderAdapter.getOrderAt(selectedPosition);
-        if (!"Pending".equals(selectedOrder.getStatus())) {
-            Toast.makeText(this, "Only pending orders can be updated", Toast.LENGTH_SHORT).show();
+        List<Order> selectedOrders = manageOrderAdapter.getSelectedOrders();
+        if (selectedOrders.isEmpty()) {
+            Toast.makeText(this, "Please select at least one order", Toast.LENGTH_SHORT).show();
             return;
         }
 
         new AlertDialog.Builder(this)
                 .setTitle("Confirm Order Update")
-                .setMessage("Are you sure you want to mark this order as " + newStatus + "?")
-                .setPositiveButton("Yes", (dialog, which) -> updateOrderStatus(selectedOrder, newStatus))
+                .setMessage("Are you sure you want to mark " + selectedOrders.size() + " orders as " + newStatus + "?")
+                .setPositiveButton("Yes", (dialog, which) -> updateOrdersStatus(selectedOrders, newStatus))
                 .setNegativeButton("No", null)
                 .show();
     }
 
-    private void updateOrderStatus(Order order, String newStatus) {
-        if ("Completed".equals(newStatus)) {
-            orderRepository.acceptOrder(order.getId());
-        } else if ("Cancelled".equals(newStatus)) {
-            orderRepository.rejectOrder(order.getId());
+    private void updateOrdersStatus(List<Order> orders, String newStatus) {
+        for (Order order : orders) {
+            if ("Completed".equals(newStatus)) {
+                orderRepository.acceptOrder(order.getId());
+            } else {
+                orderRepository.rejectOrder(order.getId());
+            }
+            order.setStatus(newStatus);
         }
-
-        order.setStatus(newStatus);
         manageOrderAdapter.notifyDataSetChanged();
-        Toast.makeText(this, "Order updated to " + newStatus, Toast.LENGTH_SHORT).show();
+        Toast.makeText(this, "Orders updated to " + newStatus, Toast.LENGTH_SHORT).show();
     }
 }

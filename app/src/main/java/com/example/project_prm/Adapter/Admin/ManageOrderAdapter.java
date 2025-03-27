@@ -9,6 +9,7 @@ import android.content.Intent;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.CheckBox;
 import android.widget.ImageView;
 import android.widget.RadioButton;
 import android.widget.TextView;
@@ -36,6 +37,7 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<ManageOrderAdapter.
     private String currentQuery = "";
 
     private int selectedPosition = -1;
+    private List<Order> selectedOrders = new ArrayList<>();
     private UserDao userDao;
     private OrderDetailDao orderDetailDao;
 
@@ -75,19 +77,19 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<ManageOrderAdapter.
         holder.status.setText(order.getStatus());
 
         if ("Completed".equals(order.getStatus()) ||"Cancelled".equals(order.getStatus()) ) {
-            holder.btnSelect.setVisibility(View.GONE);
+            holder.checkBoxSelect.setVisibility(View.GONE);
         } else {
-            holder.btnSelect.setVisibility(View.VISIBLE);
+            holder.checkBoxSelect.setVisibility(View.VISIBLE);
         }
 
-        holder.btnSelect.setChecked(selectedPosition == position);
-        holder.btnSelect.setOnClickListener(v -> {
-            if (selectedPosition == position) {
-                selectedPosition = -1;
+        holder.checkBoxSelect.setChecked(selectedOrders.contains(order));
+
+        holder.checkBoxSelect.setOnCheckedChangeListener((buttonView, isChecked) -> {
+            if (isChecked) {
+                selectedOrders.add(order);
             } else {
-                selectedPosition = position;
+                selectedOrders.remove(order);
             }
-            notifyDataSetChanged();
         });
         holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
@@ -115,7 +117,8 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<ManageOrderAdapter.
     public static class OrderViewHolder extends RecyclerView.ViewHolder {
         TextView orderID, userName, totalPrice, status;
 
-        RadioButton btnSelect;
+
+        CheckBox checkBoxSelect;
 
         public OrderViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -123,7 +126,7 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<ManageOrderAdapter.
             userName = itemView.findViewById(R.id.tvUserName);
             totalPrice = itemView.findViewById(R.id.tvTotalPrice);
             status = itemView.findViewById(R.id.tvStatus);
-            btnSelect = itemView.findViewById(R.id.radioButtonSelect);
+            checkBoxSelect = itemView.findViewById(R.id.checkBoxSelectOrder);
         }
     }
 
@@ -138,6 +141,9 @@ public class ManageOrderAdapter extends RecyclerView.Adapter<ManageOrderAdapter.
     public void clearSelection() {
         selectedPosition = -1;
         notifyDataSetChanged();
+    }
+    public List<Order> getSelectedOrders() {
+        return new ArrayList<>(selectedOrders);
     }
     public void filter( String status) {
 

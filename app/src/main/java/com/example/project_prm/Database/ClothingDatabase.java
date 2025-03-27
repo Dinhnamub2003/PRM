@@ -19,7 +19,7 @@ import java.util.concurrent.Executors;
 @Database(entities = {
         User.class, Role.class, Category.class, Product.class,
         Order.class, OrderDetail.class, Cart.class, Rating.class
-}, version = 4, exportSchema = false)
+}, version = 5, exportSchema = false)
 public abstract class ClothingDatabase extends RoomDatabase {
 
     private static volatile ClothingDatabase INSTANCE;
@@ -41,7 +41,7 @@ public abstract class ClothingDatabase extends RoomDatabase {
             synchronized (ClothingDatabase.class) {
                 if (INSTANCE == null) {
                     INSTANCE = Room.databaseBuilder(context.getApplicationContext(),
-                                    ClothingDatabase.class, "DataBase")
+                                    ClothingDatabase.class, "ClothingDatabase")
                             .createFromAsset("DB.db")
                             .build();
                 }

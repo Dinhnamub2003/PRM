@@ -195,7 +195,9 @@ public class Product {
         this.sale_price = sale_price;
         this.brand = brand;
     }
-//    public Product(String name, int i, String brand, String productCode, int stock, String unit, double salePrice, double discount, double dealerPrice, String manufacturer, String s, String currentTime, Object o, Object o1, int i1) {
-//    }
+    public double getFinalPrice() {
+        return sale_price - (sale_price * discount / 100);
+    }
+
 
 }

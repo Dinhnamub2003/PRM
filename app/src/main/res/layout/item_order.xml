@@ -33,7 +33,7 @@
             android:textSize="14sp"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/tvOrderId"
-            app:layout_constraintEnd_toStartOf="@id/radioButtonSelect"
+            app:layout_constraintEnd_toStartOf="@id/checkBoxSelectOrder"
             android:paddingTop="4dp"/>
 
         <!-- Total Price -->
@@ -62,8 +62,8 @@
 
 
         <!-- RadioButton for selection -->
-        <RadioButton
-            android:id="@+id/radioButtonSelect"
+        <CheckBox
+            android:id="@+id/checkBoxSelectOrder"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:checked="false"

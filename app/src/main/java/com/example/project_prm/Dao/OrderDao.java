@@ -19,7 +19,7 @@ public interface OrderDao {
     @Query("SELECT * FROM orders WHERE id = :orderId")
     Order getOrderById(int orderId);
 
-    @Query("SELECT * FROM orders WHERE user_id = :userId")
+    @Query("SELECT * FROM orders WHERE user_id = :userId order by created_at desc ")
     List<Order> getOrdersByUser(int userId);
 
     @Query("SELECT * FROM orders order by created_at desc")

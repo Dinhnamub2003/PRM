@@ -66,4 +66,8 @@ public class ProductRepository {
             return null;
         }
     }
+    public void updateProductStock(int productId, int quantity) {
+        executorService.execute(() -> productDao.updateStock(productId, quantity));
+    }
+
 }

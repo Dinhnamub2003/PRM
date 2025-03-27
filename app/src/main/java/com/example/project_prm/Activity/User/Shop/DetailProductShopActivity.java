@@ -19,8 +19,8 @@ public class DetailProductShopActivity extends AppCompatActivity {
 
     private ProductViewModel manageProductViewModel;
     private ImageView imageView;
-    private TextView tvName, tvBrand, tvPrice, tvManufacture,
-           tvUnit, tvStock;
+    private TextView tvName, tvBrand, tvSalePrice, tvManufacture,
+           tvUnit, tvStock,tvOriginalPrice, tvDiscount;
 
 
 
@@ -33,9 +33,10 @@ public class DetailProductShopActivity extends AppCompatActivity {
         imageView = findViewById(R.id.imageViewProductDetail);
         tvName = findViewById(R.id.tvProductNameDetail);
         tvBrand = findViewById(R.id.tvBrandDetail);
-        tvPrice = findViewById(R.id.tvPriceDetail);
+        tvSalePrice = findViewById(R.id.tvSalePriceDetail);
+        tvDiscount = findViewById(R.id.tvDiscount);
         tvManufacture = findViewById(R.id.tvManufacture);
-
+        tvOriginalPrice = findViewById(R.id.tvOriginalPriceDetail);
         tvUnit = findViewById(R.id.tvUnits);
 
         tvStock = findViewById(R.id.tvStock);
@@ -48,9 +49,19 @@ public class DetailProductShopActivity extends AppCompatActivity {
             int productId = intent.getIntExtra("PRODUCT_ID", -1);
             manageProductViewModel.getProductById(productId).observe(this, product -> {
                 if (product != null) {
+                    // Tính giá sau giảm giá
+                    double originalPrice = product.getSale_price();
+                    double discount = product.getDiscount();
+                    double salePrice = originalPrice - (originalPrice * discount / 100);
+
+                    tvOriginalPrice.setText(String.format("Original Price: %,.0f", originalPrice));
+                    tvSalePrice.setText(String.format("Sale Price: %,.0f", salePrice));
+
                     tvName.setText("Name: "+ product.getName());
                     tvBrand.setText("Brand: " + product.getBrand());
-                    tvPrice.setText("Sale Price: "+ String.format("%,.0f", product.getSale_price()));
+                    tvOriginalPrice.setText(String.format("Original Price: %,.0f", product.getSale_price()));
+
+                    tvDiscount.setText(String.format("Discount: %,.0f%%", product.getDiscount()));
 
                     tvUnit.setText("Unit: "+product.getUnit());
 

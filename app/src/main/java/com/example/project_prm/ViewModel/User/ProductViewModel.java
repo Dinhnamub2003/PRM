@@ -37,6 +37,10 @@ public class ProductViewModel extends AndroidViewModel {
     public LiveData<List<Product>> getAllProductsForUser() {
         return allProductsForUser;
     }
+    public void updateProductStock(int productId, int newStock) {
+         repository.updateProductStock(productId, newStock);
+    }
+
     public void insert(Product product) {
         repository.insert(product);
     }

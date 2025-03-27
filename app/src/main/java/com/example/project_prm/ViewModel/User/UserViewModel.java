@@ -71,8 +71,8 @@ public class UserViewModel extends AndroidViewModel {
         return passwordChangeResult;
     }
 
-    public void resetPassword(String username, String email) {
-        userRepository.verifyUserForPasswordReset(username, email, resetPasswordResult);
+    public void resetPassword(String email) {
+        userRepository.verifyUserForPasswordReset(email, resetPasswordResult);
     }
 
     public void completePasswordReset(int userId, String newPassword) {

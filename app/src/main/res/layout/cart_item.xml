@@ -3,20 +3,30 @@
     xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="wrap_content"
+    android:layout_height="120dp"
     android:padding="8dp">
+
+    <!-- CheckBox nằm ở đầu item -->
+    <CheckBox
+        android:id="@+id/checkboxSelect"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="8dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        app:layout_constraintBottom_toBottomOf="parent"/>
 
     <!-- Tên sản phẩm -->
     <TextView
         android:id="@+id/txtProductName"
         android:layout_width="0dp"
         android:layout_height="wrap_content"
+        android:padding="8dp"
         android:text="Product Name"
         android:textSize="16sp"
-        android:padding="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent"
-        app:layout_constraintEnd_toStartOf="@id/imgDelete" />
+        app:layout_constraintStart_toEndOf="@id/checkboxSelect"
+        app:layout_constraintEnd_toStartOf="@id/imgDelete"
+        app:layout_constraintTop_toTopOf="parent"/>
 
     <!-- Giá sản phẩm -->
     <TextView
@@ -26,20 +36,21 @@
         android:text="Price"
         android:textSize="14sp"
         android:padding="8dp"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@id/txtProductName" />
+        app:layout_constraintStart_toEndOf="@id/checkboxSelect"
+        app:layout_constraintTop_toBottomOf="@id/txtProductName"/>
 
     <!-- Nút giảm số lượng -->
     <ImageButton
         android:id="@+id/btnDecrease"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
+        android:layout_marginTop="10dp"
         android:src="@drawable/ic_decre"
         android:background="@drawable/bg_circle"
-        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintStart_toEndOf="@id/checkboxSelect"
         app:layout_constraintTop_toBottomOf="@id/txtProductPrice"
-        app:layout_constraintBottom_toBottomOf="parent"
         android:scaleType="centerInside"/>
+
     <!-- Số lượng sản phẩm -->
     <TextView
         android:id="@+id/txtProductQuantity"
@@ -49,22 +60,20 @@
         android:textSize="16sp"
         android:padding="8dp"
         app:layout_constraintStart_toEndOf="@id/btnDecrease"
-        app:layout_constraintTop_toBottomOf="@id/txtProductPrice"
-        app:layout_constraintBottom_toBottomOf="parent" />
-
+        app:layout_constraintTop_toBottomOf="@id/txtProductPrice"/>
 
     <!-- Nút tăng số lượng -->
-
     <ImageButton
         android:id="@+id/btnIncrease"
-        android:layout_width="50dp"
-        android:layout_height="40dp"
+        android:layout_width="27dp"
+        android:layout_height="27dp"
         android:src="@drawable/ic_incre"
         android:background="@drawable/bg_circle"
         app:layout_constraintStart_toEndOf="@id/txtProductQuantity"
         app:layout_constraintTop_toBottomOf="@id/txtProductPrice"
-        app:layout_constraintBottom_toBottomOf="parent"
+        android:layout_marginTop="10dp"
         android:scaleType="centerInside"/>
+
     <!-- Nút xóa sản phẩm -->
     <ImageView
         android:id="@+id/imgDelete"
@@ -73,8 +82,6 @@
         android:src="@android:drawable/ic_delete"
         android:padding="8dp"
         app:layout_constraintEnd_toEndOf="parent"
-        android:layout_marginTop="45dp"
-        app:layout_constraintTop_toTopOf="parent" />
-
+        app:layout_constraintTop_toTopOf="parent"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

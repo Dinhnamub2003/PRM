@@ -34,6 +34,9 @@ public interface ProductDao {
     int getTotalProducts();
     @Query("SELECT * FROM product  Order By created_at desc")
     LiveData<List<Product>> getAllProductsUser();
+    @Query("UPDATE product SET stock = stock - :quantity WHERE id = :productId AND stock >= :quantity")
+    void updateStock(int productId, int quantity);
+
 
 
 }

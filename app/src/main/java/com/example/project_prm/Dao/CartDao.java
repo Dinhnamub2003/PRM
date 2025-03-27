@@ -17,7 +17,7 @@ public interface CartDao {
     @Delete
     void delete(Cart cart);
 
-    @Query("SELECT cart.*, product.name AS productName, product.sale_price AS productPrice " +
+    @Query("SELECT cart.*, product.name AS productName, product.sale_price AS productPrice, product.stock AS productStock " +
             "FROM cart " +
             "INNER JOIN product ON cart.product_id = product.id " +
             "WHERE cart.user_id = :userId")

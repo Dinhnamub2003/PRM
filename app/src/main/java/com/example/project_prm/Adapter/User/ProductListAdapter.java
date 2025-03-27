@@ -5,6 +5,7 @@ import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.graphics.BitmapFactory;
+import android.graphics.Color;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -60,9 +61,25 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     public void onBindViewHolder(@NonNull ProductViewHolder holder, @SuppressLint("RecyclerView") int position) {
         Product product = productList.get(position);
         holder.name.setText(product.getName());
-        holder.brand.setText(product.getBrand());
-        holder.price.setText(String.format("%,.0f VND", product.getSale_price()));
+        holder.brand.setText("Brand: " + product.getBrand());
+        holder.stock.setText("Stock: " + product.getStock());
 
+        double originalPrice = product.getSale_price();
+        double discount = product.getDiscount();
+        double finalPrice = originalPrice - (originalPrice * discount / 100);
+
+        if (discount > 0) {
+            holder.price.setText(String.format("%,.0f VND", finalPrice));
+            holder.originalPrice.setText(String.format("%,.0f VND", originalPrice));
+            holder.originalPrice.setPaintFlags(holder.originalPrice.getPaintFlags() | android.graphics.Paint.STRIKE_THRU_TEXT_FLAG);
+            holder.originalPrice.setVisibility(View.VISIBLE); // Hiện giá gốc khi có giảm giá
+            holder.discountTag.setVisibility(View.VISIBLE);
+//
+        } else {
+            holder.price.setText(String.format("%,.0f VND", originalPrice));
+            holder.originalPrice.setVisibility(View.GONE); // Ẩn giá gốc nếu không có giảm giá
+            holder.discountTag.setVisibility(View.GONE);
+        }
         if (product.getImage() != null && !product.getImage().isEmpty()) {
             File imgFile = new File(product.getImage());
             if (imgFile.exists()) {
@@ -74,7 +91,17 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
         } else {
             holder.imageViewProduct.setImageResource(R.drawable.img_avatar);
         }
-
+        if (product.getStock() == 0) {
+            holder.btnAddToCart.setVisibility(View.GONE);
+            holder.tvStockStatus.setVisibility(View.VISIBLE);
+            holder.stock.setVisibility(View.GONE);
+            holder.tvStockStatus.setText("In Stock");
+            holder.tvStockStatus.setTextColor(Color.RED); // Đổi màu chữ để nổi bật
+        } else {
+            holder.btnAddToCart.setVisibility(View.VISIBLE);
+            holder.tvStockStatus.setVisibility(View.GONE);
+            holder.stock.setVisibility(View.VISIBLE);
+        }
         holder.btnAddToCart.setOnClickListener(v -> addToCartListener.onAddToCartClick(product));
         holder.itemView.setOnClickListener(v -> {
             Context context = v.getContext();
@@ -121,10 +148,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
     }
 
     public static class ProductViewHolder extends RecyclerView.ViewHolder {
-        TextView name, price, brand;
+        TextView name, price, originalPrice, brand, stock, discountTag,tvStockStatus;
         ImageView imageViewProduct;
 
         ImageButton btnAddToCart;
+
 
         public ProductViewHolder(@NonNull View itemView) {
             super(itemView);
@@ -132,6 +160,11 @@ public class ProductListAdapter extends RecyclerView.Adapter<ProductListAdapter.
             name = itemView.findViewById(R.id.tvName);
             brand = itemView.findViewById(R.id.tvBrand);
             price = itemView.findViewById(R.id.tvPrice);
+            stock = itemView.findViewById(R.id.tvStock);
+            originalPrice = itemView.findViewById(R.id.tvOriginalPrice);
+            discountTag = itemView.findViewById(R.id.tvDiscountTag);
+            tvStockStatus =  itemView.findViewById(R.id.tvStockStatus);
+
 
             btnAddToCart = itemView.findViewById(R.id.btnAddToCart);
         }

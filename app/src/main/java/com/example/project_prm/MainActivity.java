@@ -13,7 +13,7 @@ import androidx.recyclerview.widget.LinearLayoutManager;
 import androidx.recyclerview.widget.RecyclerView;
 
 import com.example.project_prm.Activity.User.Cart.CartActivity;
-import com.example.project_prm.Activity.User.Chat.ConstantKey;
+//import com.example.project_prm.Activity.User.Chat.ConstantKey;
 import com.example.project_prm.Activity.User.Profile.LoginActivity;
 import com.example.project_prm.Activity.User.Shop.ProductListActivity;
 
@@ -21,7 +21,7 @@ import com.example.project_prm.Database.ClothingDatabase;
 import com.example.project_prm.Database.DatabaseHelper;
 import com.example.project_prm.Entities.Product;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
-import com.zegocloud.zimkit.services.ZIMKit;
+//import com.zegocloud.zimkit.services.ZIMKit;
 
 import java.util.List;
 
@@ -39,10 +39,10 @@ public class MainActivity extends BaseActivity {
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
 
-        if (!isUserLoggedIn()) {
-            redirectToLogin();
-            return;
-        }
+//        if (!isUserLoggedIn()) {
+//            redirectToLogin();
+//            return;
+//        }
         DatabaseHelper.copyDatabaseFromAssets(this);
 //        EdgeToEdge.enable(this);
         getLayoutInflater().inflate(R.layout.activity_main, findViewById(R.id.content_frame));
@@ -53,15 +53,15 @@ public class MainActivity extends BaseActivity {
         } else {
             userId = getUserIdFromPreferences();
         }
-        initZegocloud();
-        startActivity(new Intent(this, LoginActivity.class));
-        finish();
+//        initZegocloud();
+//        startActivity(new Intent(this, LoginActivity.class));
+//        finish();
 
     }
-    public void initZegocloud() {
-        ZIMKit.initWith(this.getApplication(), ConstantKey.appID, ConstantKey.appSign);
-        ZIMKit.initNotifications();
-    }
+//    public void initZegocloud() {
+//        ZIMKit.initWith(this.getApplication(), ConstantKey.appID, ConstantKey.appSign);
+//        ZIMKit.initNotifications();
+//    }
 
 
 

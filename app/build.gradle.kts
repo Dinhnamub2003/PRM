@@ -52,6 +52,7 @@ dependencies {
     implementation(libs.navigation.fragment)
     implementation(libs.navigation.ui)
     implementation(libs.firebase.auth)
+
     annotationProcessor(libs.room.compiler)
     implementation(libs.firebase.auth.v2231)
     implementation(libs.play.services.auth)
@@ -72,9 +73,47 @@ dependencies {
     androidTestImplementation(libs.espresso.core)
 
     // Live
-    implementation("com.github.ZEGOCLOUD:zego_uikit_prebuilt_live_streaming_android:+")
+    implementation ("com.github.ZEGOCLOUD:zego_uikit_prebuilt_live_streaming_android:latest.release")
+    implementation ("com.google.android.material:material:1.4.0")
 
-   //chat
+    //chat
     implementation("com.github.ZEGOCLOUD:zego_inapp_chat_uikit_android:+")
     implementation ("com.google.code.gson:gson:2.8.8")
+    //Chat bot, virtual room
+    implementation ("androidx.activity:activity-ktx:1.4.0")  // Thư viện hỗ trợ ActivityResultContracts
+    implementation ("androidx.activity:activity:1.4.0" )     // Thư viện Activity chính
+    implementation("androidx.recyclerview:recyclerview:1.2.1")
+    implementation ("com.squareup.retrofit2:retrofit:2.9.0")
+    implementation ("com.squareup.retrofit2:converter-gson:2.9.0")
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    implementation ("com.android.support:appcompat-v7:28.0.0")
+    implementation ("com.android.support:design:28.0.0")
+    implementation ("com.google.android.material:material:1.5.0")
+    implementation ("androidx.lifecycle:lifecycle-runtime-ktx:2.3.1")
+    implementation ("com.squareup.okhttp3:okhttp:4.9.0")
+    implementation ("com.github.bumptech.glide:glide:4.14.2")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.14.2")
+    implementation ("com.squareup.okhttp3:logging-interceptor:4.9.0")
+    implementation ("com.github.bumptech.glide:glide:4.12.0")
+    annotationProcessor ("com.github.bumptech.glide:compiler:4.12.0")
+
+    //Zalo
+    implementation(fileTree(mapOf(
+        "dir" to "C:\\Users\\Admin\\Desktop\\ZaloPayLib",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
+    implementation(fileTree(mapOf(
+        "dir" to "C:\\Users\\Admin\\Desktop\\ZaloPayLib",
+        "include" to listOf("*.aar", "*.jar"),
+        "exclude" to listOf("")
+    )))
+    implementation("com.squareup.okhttp3:okhttp:4.6.0")
+    implementation("commons-codec:commons-codec:1.14")
+
+
+
+
+
+
 }

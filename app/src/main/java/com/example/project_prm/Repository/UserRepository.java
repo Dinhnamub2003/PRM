@@ -42,6 +42,7 @@ public class UserRepository {
     public User getUserById(int userId) {
         return userDao.getUserById(userId);
     }
+
     public LiveData<List<User>> getAllUserAdmin() {
         return userDao.getAllUsersAdmin();
     }
@@ -308,10 +309,10 @@ public class UserRepository {
         });
     }
 
-    public void verifyUserForPasswordReset(String username, String email, MutableLiveData<ResetPasswordResult> result) {
+    public void verifyUserForPasswordReset(String email, MutableLiveData<ResetPasswordResult> result) {
         executorService.execute(() -> {
             try {
-                User user = userDao.getUserForPasswordReset(username, email);
+                User user = userDao.getUserForPasswordReset( email);
                 if (user != null) {
                     if (user.isGoogleUser()) {
                         result.postValue(new ResetPasswordResult(false, "Google users must reset passwords via Google"));
