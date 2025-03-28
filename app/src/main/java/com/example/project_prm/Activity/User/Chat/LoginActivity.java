@@ -1,18 +1,22 @@
 package com.example.project_prm.Activity.User.Chat;
 
+import android.annotation.SuppressLint;
 import android.content.Intent;
+import android.content.SharedPreferences;
 import android.os.Bundle;
 import android.widget.Button;
 import android.widget.EditText;
+import android.widget.TextView;
 import android.widget.Toast;
 
 import androidx.activity.EdgeToEdge;
 import androidx.appcompat.app.AppCompatActivity;
-import androidx.core.graphics.Insets;
-import androidx.core.view.ViewCompat;
-import androidx.core.view.WindowInsetsCompat;
+import androidx.lifecycle.ViewModelProvider;
 
+import com.example.project_prm.Entities.User;
 import com.example.project_prm.R;
+import com.example.project_prm.ViewModel.Admin.ManageAccountViewModel;
+import com.example.project_prm.ViewModel.User.UserViewModel;
 import com.zegocloud.zimkit.services.ZIMKit;
 
 import im.zego.zim.enums.ZIMErrorCode;
@@ -20,40 +24,51 @@ import im.zego.zim.enums.ZIMErrorCode;
 public class LoginActivity extends AppCompatActivity {
 
     EditText userIdInput;
-    Button loginbtn;
+    TextView usernameTextView;
+
+    int currentUserId;
+    String userName;
+    String avatar;
+    ManageAccountViewModel userViewModel;
 
     @Override
+
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         EdgeToEdge.enable(this);
         setContentView(R.layout.activity_login_chat);
 
+        // Khởi tạo ViewModel
+        userViewModel = new ViewModelProvider(this).get(ManageAccountViewModel.class);
+
+        // Lấy dữ liệu đăng nhập từ SharedPreferences
+        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
+        currentUserId = sharedPreferences.getInt("user_id", -1);
+        userName = sharedPreferences.getString("username", "User");
+
+        // Quan sát LiveData từ ViewModel
+        userViewModel.getUserById(currentUserId).observe(this, user -> {
+            if (user != null) {
+                // Kiểm tra nếu image có giá trị hợp lệ
+                if (user.getImage() != null && !user.getImage().isEmpty()) {
+                    avatar = user.getImage();
+                } else {
+                    avatar = ""; // Hoặc set giá trị mặc định
+                }
+
+                // Gọi connectUser sau khi có dữ liệu
+                connectUser(String.valueOf(currentUserId), userName, avatar);
+            } else {
+                Toast.makeText(this, "User not found!", Toast.LENGTH_SHORT).show();
+            }
+        });
+
         // Khởi tạo Zego SDK
         ZIMKit.initWith(this.getApplication(), ConstantKey.appID, ConstantKey.appSign);
         ZIMKit.initNotifications();
 
-
-
-        // Khởi tạo các view
-        userIdInput = findViewById(R.id.userid_input);
-        loginbtn = findViewById(R.id.login_btn);
-
-        // Xử lý sự kiện khi nhấn nút Login
-        loginbtn.setOnClickListener(v -> {
-            String userId = userIdInput.getText().toString();
-            if (userId.isEmpty()) {
-                Toast.makeText(this, "Please enter a valid UserID", Toast.LENGTH_SHORT).show();
-                return;
-            }
-
-            // Gọi phương thức connectUser để đăng nhập
-            connectUser(userId, userId, "");
-
-
-
-
-        });
     }
+
 
     // Phương thức đăng nhập người dùng
     public void connectUser(String userId, String userName, String userAvatar) {
@@ -74,4 +89,6 @@ public class LoginActivity extends AppCompatActivity {
         Intent intent = new Intent(this, ConversationActivity.class);
         startActivity(intent);
     }
+
+
 }

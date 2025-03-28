@@ -31,7 +31,7 @@ public class CheckOutAdapter extends RecyclerView.Adapter<CheckOutAdapter.ViewHo
     public void onBindViewHolder(@NonNull ViewHolder holder, int position) {
         CartWithProduct item = productList.get(position);
         holder.txtProductName.setText(item.getProductName());
-        holder.txtQuantity.setText("Số lượng: " + item.getCart().getQuantity());
+        holder.txtQuantity.setText("Quantity: " + item.getCart().getQuantity());
         holder.txtPrice.setText(String.format("%,.0f VND", item.getCart().getPrice() * item.getCart().getQuantity()));
     }
 

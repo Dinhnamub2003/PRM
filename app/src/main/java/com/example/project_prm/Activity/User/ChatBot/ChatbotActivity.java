@@ -61,9 +61,21 @@ public class ChatbotActivity extends AppCompatActivity {
 
         GeminiApi geminiApi = GeminiRetrofitClient.getInstance().create(GeminiApi.class);
 
+        // Danh sách sản phẩm cố định
+        List<Product> fixedProducts = new ArrayList<>();
+        fixedProducts.add(new Product("Áo thun nam", 1, "Nike", "A001", 50, "Cái", 150000, 10, 120000, "Nike Corp", "image1.jpg", "2025-03-28", "2025-03-28", 0));
+        fixedProducts.add(new Product("Áo sơ mi nữ", 2, "Adidas", "A002", 30, "Cái", 200000, 15, 170000, "Adidas Ltd", "image2.jpg", "2025-03-28", "2025-03-28", 0));
+        fixedProducts.add(new Product("Áo hoodie nam", 3, "Puma", "A003", 20, "Cái", 180000, 5, 170000, "Puma Inc", "image3.jpg", "2025-03-28", "2025-03-28", 0));
+
+        // Chuỗi thông tin sản phẩm
+        StringBuilder productInfo = new StringBuilder("Danh sách sản phẩm có sẵn:\n");
+        for (Product product : fixedProducts) {
+            productInfo.append(String.format("- %s: %,.0f VND (Giảm %d%%)\n", product.getName(), product.getSale_price(), (int) product.getDiscount()));
+        }
+
         // Format the message with the user's input
-        String templateMessage = "Bạn là nhân viên tư vấn bán quần áo của thương hiệu Online Clothes và đưa ra tư vấn ngắn gọn chính xác, sử dụng ngôn ngữ con người: %s";
-        String formattedMessage = String.format(templateMessage, userMessage);
+        String templateMessage = "Bạn là nhân viên tư vấn bán quần áo của thương hiệu Kibyhunter Clothes và đưa ra tư vấn ngắn gọn chính xác, sử dụng ngôn ngữ con người. Dưới đây là danh sách sản phẩm có sẵn,gợi ý sản phẩm tên, giá, chất thiệu kiểu dáng, có được giảm giá hay không :\n%s\n\nCâu hỏi của khách hàng: %s";
+        String formattedMessage = String.format(templateMessage, productInfo.toString(), userMessage);
 
         // Create GeminiRequest with formatted message
         List<GeminiRequest.Content> contents = new ArrayList<>();

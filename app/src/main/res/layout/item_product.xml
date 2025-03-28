@@ -84,6 +84,7 @@
             android:layout_height="wrap_content"
             android:clickable="true"
             android:focusable="false"
+            android:layout_marginRight="20dp"
             android:focusableInTouchMode="false"
             app:layout_constraintBottom_toBottomOf="@id/imageViewProduct"
             app:layout_constraintEnd_toEndOf="parent"

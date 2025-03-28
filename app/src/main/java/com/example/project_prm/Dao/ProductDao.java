@@ -32,7 +32,7 @@ public interface ProductDao {
 
     @Query("SELECT COUNT(*) FROM Product where isDelete = 0")
     int getTotalProducts();
-    @Query("SELECT * FROM product  Order By created_at desc")
+    @Query("SELECT * FROM product where isDelete = 0  Order By created_at desc  ")
     LiveData<List<Product>> getAllProductsUser();
     @Query("UPDATE product SET stock = stock - :quantity WHERE id = :productId AND stock >= :quantity")
     void updateStock(int productId, int quantity);

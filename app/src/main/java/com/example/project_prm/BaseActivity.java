@@ -2,6 +2,7 @@ package com.example.project_prm;
 
 import android.content.Intent;
 import android.content.SharedPreferences;
+import android.os.Build;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.Menu;
@@ -24,12 +25,14 @@ import com.example.project_prm.Activity.Admin.Order.ManageOrderActivity;
 import com.example.project_prm.Activity.Admin.Product.ManageProductActivity;
 import com.example.project_prm.Activity.Admin.Statistic.StatisticActivity;
 import com.example.project_prm.Activity.User.Cart.CartActivity;
+import com.example.project_prm.Activity.User.ChatBot.ChatbotActivity;
 import com.example.project_prm.Activity.User.LiveStream.LiveActivity;
-import com.example.project_prm.Activity.User.LiveStream.LiveStream;
+
 import com.example.project_prm.Activity.User.Profile.LoginActivity;
 import com.example.project_prm.Activity.User.Profile.ProfileActivity;
 import com.example.project_prm.Activity.User.Shop.OrderHistoryActivity;
 import com.example.project_prm.Activity.User.Shop.ProductListActivity;
+import com.example.project_prm.Activity.User.VirtualRoom.VirtualRoomActivity;
 import com.example.project_prm.ViewModel.User.UserViewModel;
 import com.google.android.gms.auth.api.signin.GoogleSignIn;
 import com.google.android.gms.auth.api.signin.GoogleSignInClient;
@@ -37,6 +40,8 @@ import com.google.android.gms.auth.api.signin.GoogleSignInOptions;
 import com.google.android.material.bottomnavigation.BottomNavigationView;
 import com.google.android.material.navigation.NavigationView;
 import com.google.firebase.auth.FirebaseAuth;
+
+import java.util.Random;
 
 public class BaseActivity extends AppCompatActivity implements NavigationView.OnNavigationItemSelectedListener {
     protected DrawerLayout drawer;
@@ -98,6 +103,7 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
             }
             return false;
         });
+
     }
 
 
@@ -112,7 +118,11 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
     @Override
     public boolean onNavigationItemSelected(@NonNull MenuItem item) {
         int id = item.getItemId();
-
+        long appID = 1417572090;
+        String appSign = "ba52a1c32adc615039d095fc50c93d52e1885463edae4433e8d628a5914f2e1b";
+        String userID = Build.MANUFACTURER + "_" + generateUserID();
+        String userName = userID + "_Name";
+        String liveID = "test_live_id";
         if (id == R.id.nav_statistic) {
             startActivity(new Intent(this, StatisticActivity.class));
         } else if (id == R.id.nav_product) {
@@ -134,8 +144,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 Intent intent = new Intent(this, OrderHistoryActivity.class);
                 startActivity(intent);
         } else if (id == R.id.nav_live) {
-            Intent intent = new Intent(this, LiveStream.class);
+            Intent intent = new Intent(this, com.example.project_prm.Activity.User.Chat.LoginActivity.class);
             startActivity(intent);
+        } else if (id == R.id.nav_virtual_room) {
+            Intent intent = new Intent(this, VirtualRoomActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_chat_bot) {
+            Intent intent = new Intent(this, ChatbotActivity.class);
+            startActivity(intent);
+        } else if (id == R.id.nav_start_live) {  // Start Live
+            startLiveStream(appID, appSign, userID, userName, liveID);
+        } else if (id == R.id.nav_watch_live) {  // Watch Live
+            watchLiveStream(appID, appSign, userID, userName, liveID);
         }else{
             showLogoutConfirmationDialog();
         }
@@ -180,18 +200,18 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
         startActivity(intent);
         finish();
     }
-//    private void logout() {
-//        SharedPreferences sharedPreferences = getSharedPreferences("LoginPrefs", MODE_PRIVATE);
-//        SharedPreferences.Editor editor = sharedPreferences.edit();
-//        editor.clear(); // Xóa toàn bộ thông tin đăng nhập
-//        editor.apply();
-//
-//        // Chuyển hướng về màn hình đăng nhập
-//        Intent intent = new Intent(this, LoginActivity.class);
-//        intent.setFlags(Intent.FLAG_ACTIVITY_NEW_TASK | Intent.FLAG_ACTIVITY_CLEAR_TASK);
-//        startActivity(intent);
-//        finish();
-//    }
+    private String generateUserID() {
+        StringBuilder builder = new StringBuilder();
+        Random random = new Random();
+        while (builder.length() < 5) {
+            int nextInt = random.nextInt(10);
+            if (builder.length() == 0 && nextInt == 0) {
+                continue;
+            }
+            builder.append(nextInt);
+        }
+        return builder.toString();
+    }
 
     private void showLogoutConfirmationDialog() {
         new AlertDialog.Builder(this)
@@ -219,14 +239,38 @@ public class BaseActivity extends AppCompatActivity implements NavigationView.On
                 menu.findItem(R.id.nav_product).setVisible(false);
                 menu.findItem(R.id.nav_account).setVisible(false);
                 menu.findItem(R.id.nav_order).setVisible(false);
+                menu.findItem(R.id.nav_start_live).setVisible(false);
+
             } else { // Nếu là Admin (role_id == 1)
                 menu.findItem(R.id.nav_statistic).setVisible(true);
                 menu.findItem(R.id.nav_product).setVisible(true);
                 menu.findItem(R.id.nav_account).setVisible(true);
                 menu.findItem(R.id.nav_order).setVisible(true);
+                menu.findItem(R.id.nav_watch_live).setVisible(false);
             }
         });
     }
+    private void startLiveStream(long appID, String appSign, String userID, String userName, String liveID) {
+        Intent intent = new Intent(this, LiveActivity.class);
+        intent.putExtra("host", true);
+        intent.putExtra("appID", appID);
+        intent.putExtra("appSign", appSign);
+        intent.putExtra("userID", userID);
+        intent.putExtra("userName", userName);
+        intent.putExtra("liveID", liveID);
+        startActivity(intent);
+    }
+
+    private void watchLiveStream(long appID, String appSign, String userID, String userName, String liveID) {
+        Intent intent = new Intent(this, LiveActivity.class);
+        intent.putExtra("appID", appID);
+        intent.putExtra("appSign", appSign);
+        intent.putExtra("userID", userID);
+        intent.putExtra("userName", userName);
+        intent.putExtra("liveID", liveID);
+        startActivity(intent);
+    }
+
 
 
 }

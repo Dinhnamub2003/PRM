@@ -74,7 +74,7 @@ dependencies {
 
     // Live
     implementation ("com.github.ZEGOCLOUD:zego_uikit_prebuilt_live_streaming_android:latest.release")
-    implementation ("com.google.android.material:material:1.4.0")
+
 
     //chat
     implementation("com.github.ZEGOCLOUD:zego_inapp_chat_uikit_android:+")

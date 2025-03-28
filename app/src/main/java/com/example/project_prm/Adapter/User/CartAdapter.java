@@ -98,13 +98,21 @@ public class CartAdapter extends RecyclerView.Adapter<CartAdapter.CartViewHolder
             txtProductPrice.setText(String.format("Price: %,.0f VND", cart.getPrice()));
 
             btnIncrease.setOnClickListener(v -> {
-                cart.setQuantity(cart.getQuantity() + 1);
-                cartViewModel.update(cart);
-                notifyItemChanged(getAdapterPosition());
-                if (quantityChangeListener != null) {
-                    quantityChangeListener.onQuantityChanged(); // Cập nhật tổng giá
+                int currentQuantity = cart.getQuantity();
+                int maxStock = cartWithProduct.getProductStock(); // Lấy số lượng sản phẩm tồn kho
+
+                if (currentQuantity < maxStock) {
+                    cart.setQuantity(currentQuantity + 1);
+                    cartViewModel.update(cart);
+                    notifyItemChanged(getAdapterPosition());
+                    if (quantityChangeListener != null) {
+                        quantityChangeListener.onQuantityChanged(); // Cập nhật tổng giá
+                    }
+                } else {
+                    Toast.makeText(itemView.getContext(), "Max stock!", Toast.LENGTH_SHORT).show();
                 }
             });
+
 
             btnDecrease.setOnClickListener(v -> {
                 if (cart.getQuantity() > 1) {

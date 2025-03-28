@@ -20,7 +20,7 @@
         android:maxWidth="320dp"
         android:lineSpacingExtra="4dp"
         android:ellipsize="none"
-        android:maxLines="5"
+        android:maxLines="50"
         android:scrollHorizontally="false"
         android:gravity="start|top"
         android:breakStrategy="simple"

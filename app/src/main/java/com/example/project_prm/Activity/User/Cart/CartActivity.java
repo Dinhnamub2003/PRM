@@ -113,34 +113,7 @@ public class CartActivity extends BaseActivity {
                 .show();
     }
 
-//    private void processOrder() {
-//        List<OrderDetail> orderDetails = new ArrayList<>();
-//        double totalPrice = 0;
-//        List<CartWithProduct> selectedItems = new ArrayList<>(cartAdapter.getSelectedItems());
-//
-//        for (CartWithProduct item : selectedItems) {
-//            if (item.getCart().getQuantity() > item.getProductStock()) {
-//                Toast.makeText(this, "Sản phẩm " + item.getProductName() + " không đủ hàng!", Toast.LENGTH_SHORT).show();
-//                return;
-//            }
-//            totalPrice += item.getCart().getQuantity() * item.getProductPrice();
-//            orderDetails.add(new OrderDetail(0, 0, item.getCart().getProduct_id(), item.getCart().getQuantity(), item.getProductPrice()));
-//
-//
-//            productViewModel.updateProductStock(item.getCart().getProduct_id(), item.getCart().getQuantity());
-//        }
-//
-//        Order order = new Order(0, currentUserId, totalPrice, "Pending",
-//                new SimpleDateFormat("yyyy-MM-dd HH:mm:ss", Locale.getDefault()).format(new Date()), "");
-//
-//        orderViewModel.insertOrderWithDetails(order, orderDetails, () -> {
-//            for (CartWithProduct item : selectedItems) {
-//                cartViewModel.delete(item.getCart());
-//            }
-//            Toast.makeText(this, "Order placed successfully!", Toast.LENGTH_SHORT).show();
-//            finish();
-//        });
-//    }
+
     private void processOrder() {
         if (cartAdapter.getSelectedItems().isEmpty()) {
             Toast.makeText(this, "Vui lòng chọn ít nhất một sản phẩm!", Toast.LENGTH_SHORT).show();
