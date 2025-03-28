@@ -2,6 +2,7 @@ package com.example.project_prm.Activity.User.Chat;
 
 import android.annotation.SuppressLint;
 import android.content.DialogInterface;
+import android.content.Intent;
 import android.os.Bundle;
 import android.widget.EditText;
 import android.widget.PopupMenu;
@@ -13,6 +14,7 @@ import androidx.core.graphics.Insets;
 import androidx.core.view.ViewCompat;
 import androidx.core.view.WindowInsetsCompat;
 
+import com.example.project_prm.Activity.User.Shop.ProductListActivity;
 import com.example.project_prm.R;
 import com.google.android.material.floatingactionbutton.FloatingActionButton;
 import com.zegocloud.zimkit.common.ZIMKitRouter;
@@ -40,15 +42,19 @@ public class ConversationActivity extends AppCompatActivity {
     }
 
 
-    void showPopupMenu(){
-        PopupMenu popupMenu = new PopupMenu(this,actionButton);
-        popupMenu.getMenuInflater().inflate(R.menu.menu,popupMenu.getMenu());
-        popupMenu.setOnMenuItemClickListener(menuItem ->{
-            if(menuItem.getItemId()==R.id.new_chat){
+    void showPopupMenu() {
+        PopupMenu popupMenu = new PopupMenu(this, actionButton);
+        popupMenu.getMenuInflater().inflate(R.menu.menu, popupMenu.getMenu());
+
+        popupMenu.setOnMenuItemClickListener(menuItem -> {
+            if (menuItem.getItemId() == R.id.new_chat) {
                 showNewChatDialog();
                 return true;
             }
-            if(menuItem.getItemId()==R.id.logout){
+            if (menuItem.getItemId() == R.id.logout) {
+                Intent intent = new Intent(this, ProductListActivity.class);
+                startActivity(intent);
+                finish();
                 return true;
             }
             return false;
@@ -57,12 +63,13 @@ public class ConversationActivity extends AppCompatActivity {
         popupMenu.show();
     }
 
+
     void showNewChatDialog(){
         AlertDialog.Builder builder = new AlertDialog.Builder(this);
         builder.setTitle("New chat");
 
         EditText edittext = new EditText(this);
-        edittext.setHint("UserID");
+        edittext.setHint("UserName");
         builder.setView(edittext);
 
         builder.setPositiveButton("ok", new DialogInterface.OnClickListener() {

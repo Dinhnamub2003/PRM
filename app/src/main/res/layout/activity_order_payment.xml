@@ -45,5 +45,18 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintTop_toBottomOf="@id/recyclerViewCheckOut" />
+    <Button
+        android:id="@+id/btnBack"
+        android:layout_width="0dp"
+        android:layout_height="50dp"
+        android:text="Back"
+        android:textSize="18sp"
+        android:textStyle="bold"
+        android:backgroundTint="@color/warning"
+        android:textColor="@color/white"
+        android:layout_marginTop="32dp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/buttonThanhToan" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

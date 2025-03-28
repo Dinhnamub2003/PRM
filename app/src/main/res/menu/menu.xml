@@ -3,7 +3,7 @@
 
     <item android:title="New chat"
         android:id="@+id/new_chat"/>
-    <item android:title="Logout"
+    <item android:title="Back"
         android:id="@+id/logout"/>
 
 </menu>

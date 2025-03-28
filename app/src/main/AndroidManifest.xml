@@ -3,7 +3,7 @@
     xmlns:tools="http://schemas.android.com/tools">
 
     <uses-permission android:name="android.permission.INTERNET" />
-    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE"/>
+    <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
     <uses-permission
         android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
@@ -24,19 +24,24 @@
         android:supportsRtl="true"
         android:theme="@style/Theme.Project_PRM"
         tools:targetApi="35">
+
+        <activity
+            android:name=".Activity.User.LiveStream.LiveActivity"
+            android:exported="true" />
         <activity
             android:name=".Activity.User.ZaloPay.PaymentNotification"
             android:exported="true" />
         <activity
             android:name=".Activity.User.ZaloPay.OrderPayment"
             android:exported="true"
-
             android:label="Merchant Demo"
             android:launchMode="singleTask">
             <intent-filter>
                 <action android:name="android.intent.action.VIEW" />
+
                 <category android:name="android.intent.category.DEFAULT" />
                 <category android:name="android.intent.category.BROWSABLE" />
+
                 <data
                     android:host="app"
                     android:scheme="demozpdk" />
@@ -48,7 +53,6 @@
         <activity
             android:name=".Activity.User.VirtualRoom.VirtualRoomActivity"
             android:exported="true" />
-
         <activity
             android:name=".Activity.User.Chat.LoginActivity"
             android:exported="true" />
@@ -108,12 +112,6 @@
             android:exported="false" />
         <activity
             android:name=".Activity.Admin.Account.ManageAccountActivity"
-            android:exported="true" />
-        <activity
-            android:name=".Activity.User.LiveStream.LiveActivity"
-            android:exported="false" />
-        <activity
-            android:name=".Activity.User.LiveStream.LiveStream"
             android:exported="true" />
         <activity
             android:name=".Activity.Admin.Category.ManageCategoryActivity"

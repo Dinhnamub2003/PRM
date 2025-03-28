@@ -37,7 +37,7 @@ public class DetailProductActivity extends AppCompatActivity {
         tvStatus = findViewById(R.id.tvStatusDetail);
         tvManufacture = findViewById(R.id.tvManufacture);
         tvCreate_at = findViewById(R.id.tvCreate);
-        tvUnit = findViewById(R.id.tvUnits);
+        tvUnit = findViewById(R.id.tvUnit);
         tvUpdate_at = findViewById(R.id.tvUpdate);
         tvProductCode = findViewById(R.id.tvProductCode);
         tvDealer = findViewById(R.id.tvDealerPrice);

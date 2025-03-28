@@ -5,7 +5,7 @@
 
         <item
             android:id="@+id/nav_statistic"
-            android:icon="@drawable/ic_menu_camera"
+            android:icon="@drawable/ic_chart"
             android:title="Statistic" />
         <item
             android:id="@+id/nav_product"
@@ -13,12 +13,16 @@
             android:title="Product" />
         <item
             android:id="@+id/nav_account"
-            android:icon="@drawable/ic_menu_slideshow"
+            android:icon="@drawable/ic_profile"
             android:title="Account" />
         <item
             android:id="@+id/nav_order"
             android:icon="@drawable/ic_menu_manage"
             android:title="Order" />
+        <item
+            android:id="@+id/nav_start_live"
+            android:icon="@drawable/ic_live"
+            android:title="Start Live" />
 
     </group>
     <item
@@ -27,12 +31,24 @@
         android:icon="@android:color/transparent"/>
     <group android:checkableBehavior="none">
         <item
+            android:id="@+id/nav_chat_bot"
+            android:icon="@drawable/ic_chat_bot"
+            android:title="ChatBot" />
+        <item
+            android:id="@+id/nav_virtual_room"
+            android:icon="@drawable/ic_menu_manage"
+            android:title="VitualRoom" />
+        <item
+            android:id="@+id/nav_watch_live"
+            android:icon="@drawable/ic_live"
+            android:title="Watch Live" />
+        <item
             android:id="@+id/nav_live"
-            android:icon="@drawable/ic_menu_slideshow"
-            android:title="Live" />
+            android:icon="@drawable/ic_chat"
+            android:title="Chat" />
         <item
             android:id="@+id/nav_profile"
-            android:icon="@drawable/ic_menu_manage"
+            android:icon="@drawable/ic_profile"
             android:title="Profile" />
         <item
             android:id="@+id/nav_order_history"
